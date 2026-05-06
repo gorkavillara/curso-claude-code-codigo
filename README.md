@@ -1,6 +1,6 @@
 # Notebox — pequeña API de notas (Node + Express + TypeScript)
 
-> Rama `tema-07/inicio` del repo del curso. El material del formador (`curso/`) está intacto. El código del proyecto vive en la raíz: `src/`, `test/`.
+> Rama `tema-07/inicio` del repo del curso. El código del proyecto vive en la raíz: `src/`, `test/`. La carpeta `curso/` se mantiene igual al cambiar de rama.
 
 Aplicación deliberadamente **pequeña pero imperfecta**: tiene 4 problemas plantados a propósito para practicar prompting. Los enunciados están en `curso/tema-07-prompting/ejercicios.md` y la solución de referencia en la rama `tema-07/solucion`.
 
