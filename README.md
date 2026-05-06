@@ -1,35 +1,43 @@
-# Claude Code para Desarrolladores
+# Notebox — pequeña API de notas (Node + Express + TypeScript)
 
-Material del curso "Claude Code para Desarrolladores: Ingeniería de SW Asistida por IA" (27 temas, 2 semanas).
+> Rama `tema-07/inicio` del repo del curso. El material del formador (`curso/`) está intacto. El código del proyecto vive en la raíz: `src/`, `test/`.
+
+Aplicación deliberadamente **pequeña pero imperfecta**: tiene 4 problemas plantados a propósito para practicar prompting. Los enunciados están en `curso/tema-07-prompting/ejercicios.md` y la solución de referencia en la rama `tema-07/solucion`.
 
 ## Estructura
 
 ```
-.                              ← raíz del repo
-  curso/                       ← material del formador (igual en TODAS las ramas)
-    tema-01-fundamentos/
-      guion.md                 # Lo que dice/promptea el formador
-      ejercicios.md            # Enunciados + soluciones de referencia
-    tema-07-prompting/
-      guion.md
-      ejercicios.md
-      SOLUCION.md              # Notas internas del formador
-  src/, test/, package.json…   ← código del tema actual (cambia con la rama)
+src/
+  server.ts              # Entry point Express
+  routes/notes.ts        # Endpoints HTTP
+  services/notes.ts      # Lógica de negocio
+  storage/memory.ts      # Repositorio en memoria
+  search/index.ts        # Búsqueda por texto
+  models/note.ts         # Tipos + factory
+test/
+  notes.service.test.ts
+  storage.test.ts
+package.json
+tsconfig.json
 ```
 
-## Modelo de ramas
+## Requisitos
 
-- `main` — solo `curso/`. Sin código en raíz. Es la fuente de la documentación del curso.
-- `tema-XX/inicio` — `curso/` + código de partida del tema XX en la raíz.
-- `tema-XX/solucion` — `curso/` + código del tema XX con los ejercicios resueltos.
+- **Node 24+** (usamos type-stripping nativo).
 
-Para cambiar de tema en la sesión: `git checkout tema-XX/inicio`. La carpeta `curso/` no se modifica al cambiar de rama (todas las ramas comparten el mismo árbol de `curso/`).
+## Cómo arrancar
 
-## Convenciones
+```bash
+npm install
+npm run dev          # arranca en :3000 con --watch
+npm test             # ejecuta los tests con node --test
+npm run typecheck    # tsc --noEmit
+```
 
-**Guiones** — tres bloques:
-1. Encuadre (lo que digo).
-2. Demos en vivo (lo que prompteo, literal).
-3. Cierre y puente al siguiente tema.
+## Endpoints
 
-**Ejercicios** — patrón **Enunciado → Pista → Solución de referencia**.
+- `POST   /notes`               — `{ title, body }`
+- `GET    /notes`               — listar (`?archived=true`)
+- `GET    /notes/search`        — `?q=...`
+- `POST   /notes/:id/archive`
+- `POST   /notes/:id/unarchive`
