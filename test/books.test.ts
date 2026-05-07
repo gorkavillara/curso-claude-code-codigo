@@ -14,7 +14,23 @@ describe('books API', () => {
       .send({ title: 'Refactoring', author: 'Martin Fowler' });
     assert.equal(r.status, 201);
     assert.equal(r.body.title, 'Refactoring');
+    assert.equal(r.body.outOfPrint, false);
     assert.ok(r.body.id);
+  });
+
+  it('POST /books acepta outOfPrint=true', async () => {
+    const r = await request(app)
+      .post('/books')
+      .send({ title: 'Old Book', author: 'Anon', outOfPrint: true });
+    assert.equal(r.status, 201);
+    assert.equal(r.body.outOfPrint, true);
+  });
+
+  it('POST /books rechaza outOfPrint no booleano', async () => {
+    const r = await request(app)
+      .post('/books')
+      .send({ title: 'X', author: 'Y', outOfPrint: 'yes' });
+    assert.equal(r.status, 400);
   });
 
   it('POST /books rechaza payload inválido', async () => {

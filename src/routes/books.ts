@@ -5,14 +5,23 @@ import { storage } from '../storage/memory.ts';
 export const booksRouter: Router = Router();
 
 booksRouter.post('/', (req: Request, res: Response) => {
-  const { title, author } = (req.body ?? {}) as { title?: string; author?: string };
+  const { title, author, outOfPrint } = (req.body ?? {}) as {
+    title?: string;
+    author?: string;
+    outOfPrint?: boolean;
+  };
   if (typeof title !== 'string' || title.trim().length === 0) {
     return res.status(400).json({ error: 'title requerido' });
   }
   if (typeof author !== 'string' || author.trim().length === 0) {
     return res.status(400).json({ error: 'author requerido' });
   }
-  const book = storage.save(createBook({ title: title.trim(), author: author.trim() }));
+  if (outOfPrint !== undefined && typeof outOfPrint !== 'boolean') {
+    return res.status(400).json({ error: 'outOfPrint debe ser boolean' });
+  }
+  const book = storage.save(
+    createBook({ title: title.trim(), author: author.trim(), outOfPrint }),
+  );
   res.status(201).json(book);
 });
 
