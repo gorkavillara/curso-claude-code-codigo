@@ -1,35 +1,54 @@
-# Claude Code para Desarrolladores
+# Notebox — repo de prácticas del Tema 2 (Interfaces de Claude Code)
 
-Material del curso "Claude Code para Desarrolladores: Ingeniería de SW Asistida por IA" (27 temas, 2 semanas).
+> Rama `tema-02/inicio`. El código del proyecto vive en la raíz: `src/`, `test/`. La documentación del curso (`docs/`, `curso/`) se mantiene igual al cambiar de rama.
 
-## Estructura
+Pequeña API de notas (Node 24 + Express + TypeScript) usada como base de prácticas. En el Tema 2 se utiliza para experimentar con las distintas **interfaces oficiales** de Claude Code (CLI, web, escritorio, VS Code, JetBrains, Slack, CI/CD).
+
+## Sub-ramas del Tema 2
+
+| Rama | Estado |
+|---|---|
+| `tema-02/inicio` | Punto de partida (esta rama). |
+| `tema-02/demo-01` | Estado tras Demo 1 — sesión interactiva en CLI. |
+| `tema-02/demo-02` | Estado tras Demo 2 — mismo prompt en CLI vs VS Code. |
+| `tema-02/demo-03` | Estado tras Demo 3 — workflow de GitHub Actions añadido. |
+| `tema-02/ejercicio` | Código + enunciado del ejercicio. |
+| `tema-02/solucion` | Ejercicio resuelto. |
+
+## Estructura del proyecto
 
 ```
-.                              ← raíz del repo
-  curso/                       ← guiones y ejercicios (igual en TODAS las ramas)
-    tema-01-fundamentos/
-      guion.md
-      ejercicios.md
-    tema-07-prompting/
-      guion.md
-      ejercicios.md
-      SOLUCION.md
-  src/, test/, package.json…   ← código del tema actual (cambia con la rama)
+src/
+  server.ts              # Entry point Express
+  routes/notes.ts        # Endpoints HTTP
+  services/notes.ts      # Lógica de negocio
+  storage/memory.ts      # Repositorio en memoria
+  search/index.ts        # Búsqueda por texto
+  models/note.ts         # Tipos + factory
+test/
+  notes.service.test.ts
+  storage.test.ts
+package.json
+tsconfig.json
 ```
 
-## Modelo de ramas
+## Requisitos
 
-- `main` — solo `curso/`. Sin código en raíz. Es la fuente de la documentación del curso.
-- `tema-XX/inicio` — `curso/` + código de partida del tema XX en la raíz.
-- `tema-XX/solucion` — `curso/` + código del tema XX con los ejercicios resueltos.
+- **Node 24+** (usamos type-stripping nativo).
 
-Para cambiar de tema en la sesión: `git checkout tema-XX/inicio`. La carpeta `curso/` no se modifica al cambiar de rama (todas las ramas comparten el mismo árbol de `curso/`).
+## Cómo arrancar
 
-## Convenciones
+```bash
+npm install
+npm run dev          # arranca en :3000 con --watch
+npm test             # ejecuta los tests con node --test
+npm run typecheck    # tsc --noEmit
+```
 
-**Guiones** — tres bloques:
-1. Encuadre (lo que digo).
-2. Demos en vivo (lo que prompteo, literal).
-3. Cierre y puente al siguiente tema.
+## Endpoints
 
-**Ejercicios** — patrón **Enunciado → Pista → Solución de referencia**.
+- `POST   /notes`               — `{ title, body }`
+- `GET    /notes`               — listar (`?archived=true`)
+- `GET    /notes/search`        — `?q=...`
+- `POST   /notes/:id/archive`
+- `POST   /notes/:id/unarchive`
