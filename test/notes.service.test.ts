@@ -28,4 +28,8 @@ describe('notesService', () => {
   it('devuelve null al archivar una nota inexistente', () => {
     assert.equal(notesService.archive('no-existe'), null);
   });
+
+  it('no permite crear una nota con title vacío', () => {
+    assert.throws(() => notesService.create({ title: '' }));
+  });
 });
