@@ -33,6 +33,24 @@ describe('books API', () => {
     assert.equal(r.status, 400);
   });
 
+  it('POST /books acepta title de exactamente 100 caracteres', async () => {
+    const title = 'a'.repeat(100);
+    const r = await request(app)
+      .post('/books')
+      .send({ title, author: 'Autor' });
+    assert.equal(r.status, 201);
+    assert.equal(r.body.title, title);
+  });
+
+  it('POST /books rechaza title de más de 100 caracteres', async () => {
+    const title = 'a'.repeat(101);
+    const r = await request(app)
+      .post('/books')
+      .send({ title, author: 'Autor' });
+    assert.equal(r.status, 400);
+    assert.match(r.body.error, /100/);
+  });
+
   it('POST /books rechaza payload inválido', async () => {
     const r = await request(app).post('/books').send({ title: 'sin autor' });
     assert.equal(r.status, 400);

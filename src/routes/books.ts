@@ -13,6 +13,9 @@ booksRouter.post('/', (req: Request, res: Response) => {
   if (typeof title !== 'string' || title.trim().length === 0) {
     return res.status(400).json({ error: 'title requerido' });
   }
+  if (title.trim().length > 100) {
+    return res.status(400).json({ error: 'title no puede superar 100 caracteres' });
+  }
   if (typeof author !== 'string' || author.trim().length === 0) {
     return res.status(400).json({ error: 'author requerido' });
   }
