@@ -4,6 +4,9 @@ import { search as searchIndex } from '../search/index.ts';
 
 export const notesService = {
   create(input: CreateNoteInput): Note {
+    if (!input.title || input.title.trim().length === 0) {
+      throw new Error('title is required');
+    }
     const note = createNote(input);
     return storage.save(note);
   },
