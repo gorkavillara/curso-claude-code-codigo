@@ -1,43 +1,22 @@
-# Notebox — pequeña API de notas (Node + Express + TypeScript)
+# Notebox — repo de prácticas del Tema 8 (Prompting profesional)
 
-> Rama `tema-07/inicio` del repo del curso. El código del proyecto vive en la raíz: `src/`, `test/`. La carpeta `curso/` se mantiene igual al cambiar de rama.
+> Rama `tema-08/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-Aplicación deliberadamente **pequeña pero imperfecta**: tiene 4 problemas plantados a propósito para practicar prompting. Los enunciados están en `curso/tema-07-prompting/ejercicios.md` y la solución de referencia en la rama `tema-07/solucion`.
+API de notas (Node 24 + Express + TypeScript). En el Tema 8 se usa para ejercitar **prompting profesional**: prompts con contexto, objetivo y restricciones; alternativas antes de código; cambio mínimo verificado.
 
-## Estructura
+## Los 4 problemas plantados
 
-```
-src/
-  server.ts              # Entry point Express
-  routes/notes.ts        # Endpoints HTTP
-  services/notes.ts      # Lógica de negocio
-  storage/memory.ts      # Repositorio en memoria
-  search/index.ts        # Búsqueda por texto
-  models/note.ts         # Tipos + factory
-test/
-  notes.service.test.ts
-  storage.test.ts
-package.json
-tsconfig.json
-```
+| # | Archivo | Síntoma |
+|---|---|---|
+| 1 | `src/search/index.ts` | Búsqueda sensible a mayúsculas y acentos |
+| 2 | `src/services/notes.ts` | archive/unarchive con if anidados y duplicación |
+| 3 | `src/routes/notes.ts` | POST /notes sin validación de entrada |
+| 4 | `test/` | Sin tests para search ni validación HTTP |
 
-## Requisitos
-
-- **Node 24+** (usamos type-stripping nativo).
-
-## Cómo arrancar
+## Arranque
 
 ```bash
 npm install
-npm run dev          # arranca en :3000 con --watch
-npm test             # ejecuta los tests con node --test
-npm run typecheck    # tsc --noEmit
+npm test        # 7 tests verdes
+npm run dev     # :3000
 ```
-
-## Endpoints
-
-- `POST   /notes`               — `{ title, body }`
-- `GET    /notes`               — listar (`?archived=true`)
-- `GET    /notes/search`        — `?q=...`
-- `POST   /notes/:id/archive`
-- `POST   /notes/:id/unarchive`
