@@ -1,8 +1,8 @@
-# Notebox — repo de prácticas del Tema 9 (Skills reutilizables)
+# Notebox — repo de prácticas del Tema 10 (Exploración de repositorios)
 
-> Rama `tema-09/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-10/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 9 se usa para crear y activar **skills** que estandarizan tareas repetidas del equipo: testing, code review, documentación.
+API de notas (Node 24 + Express + TypeScript). En el Tema 10 se usa para practicar **exploración de repositorios desconocidos**: extraer el mapa de capas, detectar deuda técnica y generar guías de onboarding con prompts sistemáticos.
 
 ## Estructura del proyecto
 
