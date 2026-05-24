@@ -1,22 +1,28 @@
-# Notebox — repo de prácticas del Tema 8 (Prompting profesional)
+# Notebox — repo de prácticas del Tema 9 (Skills reutilizables)
 
-> Rama `tema-08/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-09/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 8 se usa para ejercitar **prompting profesional**: prompts con contexto, objetivo y restricciones; alternativas antes de código; cambio mínimo verificado.
+API de notas (Node 24 + Express + TypeScript). En el Tema 9 se usa para crear y activar **skills** que estandarizan tareas repetidas del equipo: testing, code review, documentación.
 
-## Los 4 problemas plantados
+## Estructura del proyecto
 
-| # | Archivo | Síntoma |
-|---|---|---|
-| 1 | `src/search/index.ts` | Búsqueda sensible a mayúsculas y acentos |
-| 2 | `src/services/notes.ts` | archive/unarchive con if anidados y duplicación |
-| 3 | `src/routes/notes.ts` | POST /notes sin validación de entrada |
-| 4 | `test/` | Sin tests para search ni validación HTTP |
+```
+src/
+  server.ts              # Entry point Express
+  routes/notes.ts        # Endpoints HTTP
+  services/notes.ts      # Lógica de negocio
+  storage/memory.ts      # Repositorio en memoria
+  search/index.ts        # Búsqueda por texto
+  models/note.ts         # Tipos + factory
+test/
+  notes.service.test.ts
+  storage.test.ts
+```
 
 ## Arranque
 
 ```bash
 npm install
-npm test        # 7 tests verdes
+npm test        # tests verdes
 npm run dev     # :3000
 ```
