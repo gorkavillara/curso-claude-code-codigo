@@ -4,8 +4,22 @@ import { notesService } from '../services/notes.ts';
 export const notesRouter: Router = Router();
 
 notesRouter.post('/', (req: Request, res: Response) => {
-  const { title, body } = (req.body ?? {}) as { title?: string; body?: string };
-  const note = notesService.create({ title: title as string, body });
+  const { title, body } = (req.body ?? {}) as { title?: unknown; body?: unknown };
+
+  if (typeof title !== 'string' || title.length === 0) {
+    return res.status(400).json({ error: 'title is required' });
+  }
+  if (title.length > 200) {
+    return res.status(400).json({ error: 'title must be at most 200 characters' });
+  }
+  if (body !== undefined && typeof body !== 'string') {
+    return res.status(400).json({ error: 'body must be a string' });
+  }
+  if (typeof body === 'string' && body.length > 5000) {
+    return res.status(400).json({ error: 'body must be at most 5000 characters' });
+  }
+
+  const note = notesService.create({ title, body: body as string | undefined });
   res.status(201).json(note);
 });
 

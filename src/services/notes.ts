@@ -18,46 +18,17 @@ export const notesService = {
   },
 
   archive(id: string): Note | null {
-    const note = storage.findById(id);
-    if (note) {
-      if (note.archived === false) {
-        if (note.title && note.title.length > 0) {
-          const updated = storage.update(id, { archived: true });
-          if (updated) {
-            return updated;
-          } else {
-            return null;
-          }
-        } else {
-          return null;
-        }
-      } else {
-        return note;
-      }
-    } else {
-      return null;
-    }
+    return setArchived(id, true);
   },
 
   unarchive(id: string): Note | null {
-    const note = storage.findById(id);
-    if (note) {
-      if (note.archived === true) {
-        if (note.title && note.title.length > 0) {
-          const updated = storage.update(id, { archived: false });
-          if (updated) {
-            return updated;
-          } else {
-            return null;
-          }
-        } else {
-          return null;
-        }
-      } else {
-        return note;
-      }
-    } else {
-      return null;
-    }
+    return setArchived(id, false);
   },
 };
+
+function setArchived(id: string, value: boolean): Note | null {
+  const note = storage.findById(id);
+  if (!note) return null;
+  if (note.archived === value) return note;
+  return storage.update(id, { archived: value });
+}
