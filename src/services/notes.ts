@@ -1,6 +1,6 @@
-import { createNote, type CreateNoteInput, type Note } from '../models/note.ts';
-import { storage, type ListFilters } from '../storage/memory.ts';
-import { search as searchIndex } from '../search/index.ts';
+import { createNote, type CreateNoteInput, type Note } from "../models/note.ts";
+import { storage, type ListFilters } from "../storage/memory.ts";
+import { search as searchIndex } from "../search/index.ts";
 
 export const notesService = {
   create(input: CreateNoteInput): Note {
@@ -13,8 +13,19 @@ export const notesService = {
   },
 
   search(query: string | undefined | null): Note[] {
-    const all = storage.list();
-    return searchIndex(all, query);
+    if (!!query) {
+      const all = storage.list();
+      if (all) {
+        if (all.length > 0) {
+          return searchIndex(all, query);
+        } else {
+          return [];
+        }
+      }
+      return [];
+    } else {
+      return [];
+    }
   },
 
   archive(id: string): Note | null {
