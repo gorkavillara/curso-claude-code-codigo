@@ -15,7 +15,7 @@ Este repo tiene un conjunto de cambios en varias ramas. Antes de leer nada:
 
 1. En el panel lateral del IDE:
    ```
-   Compara el estado actual de src/ con la rama main. Resume los cambios
+   Compara el estado actual de src/ con la rama tema-06/main-ejercicio-02. Resume los cambios
    en 5 puntos concisos y márcame los 2 más arriesgados con justificación.
    ```
 2. Lee el resumen que devuelve Claude.
