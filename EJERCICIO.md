@@ -25,20 +25,20 @@ La skill debe definir:
 Abre una **nueva sesión** de Claude Code y lanza:
 
 ```
-/doc-function archiveNote
+/doc-function archive
 ```
 
 O si tienes `description:` configurada:
 
 ```
-documenta la función archiveNote de src/services/notes.ts
+documenta la función archive de src/services/notes.ts
 ```
 
 ## Criterio de éxito
 
 - [ ] La skill genera `@param` y `@returns` con tipos TypeScript.
 - [ ] Los comentarios están en español.
-- [ ] `archiveNote` incluye `@throws NoteNotFoundError` (la función puede lanzarla).
+- [ ] `archive` incluye `@throws NoteNotFoundError` (la función puede lanzarla).
 - [ ] No hay líneas de relleno del tipo "Esta función archiva una nota".
 
 ## Preguntas de reflexión
