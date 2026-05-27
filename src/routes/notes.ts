@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from 'express';
-import { notesService } from '../services/notes.ts';
+import { notesService, NoteNotFoundError } from '../services/notes.ts';
 
 export const notesRouter: Router = Router();
 
@@ -19,6 +19,19 @@ notesRouter.get('/', (req: Request, res: Response) => {
 notesRouter.get('/search', (req: Request, res: Response) => {
   const q = typeof req.query.q === 'string' ? req.query.q : '';
   res.json(notesService.search(q));
+});
+
+notesRouter.patch('/:id', (req: Request, res: Response) => {
+  const changes = (req.body ?? {}) as { title?: string; body?: string };
+  try {
+    const updated = notesService.updateNote(req.params.id, changes);
+    res.json(updated);
+  } catch (err) {
+    if (err instanceof NoteNotFoundError) {
+      return res.status(404).json({ error: 'not found' });
+    }
+    throw err;
+  }
 });
 
 notesRouter.post('/:id/archive', (req: Request, res: Response) => {

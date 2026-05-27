@@ -2,6 +2,13 @@ import { createNote, type CreateNoteInput, type Note } from '../models/note.ts';
 import { storage, type ListFilters } from '../storage/memory.ts';
 import { search as searchIndex } from '../search/index.ts';
 
+export class NoteNotFoundError extends Error {
+  constructor(id: string) {
+    super(`Note not found: ${id}`);
+    this.name = 'NoteNotFoundError';
+  }
+}
+
 export const notesService = {
   create(input: CreateNoteInput): Note {
     const note = createNote(input);
@@ -15,6 +22,15 @@ export const notesService = {
   search(query: string | undefined | null): Note[] {
     const all = storage.list();
     return searchIndex(all, query);
+  },
+
+  updateNote(id: string, changes: { title?: string; body?: string }): Note {
+    const patch: Partial<Note> = {};
+    if (changes.title !== undefined) patch.title = changes.title;
+    if (changes.body !== undefined) patch.body = changes.body;
+    const updated = storage.update(id, patch);
+    if (!updated) throw new NoteNotFoundError(id);
+    return updated;
   },
 
   archive(id: string): Note | null {
