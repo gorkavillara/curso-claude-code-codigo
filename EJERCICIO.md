@@ -18,7 +18,7 @@ La skill `add-tests` está precreada en `.claude/skills/add-tests/SKILL.md` **si
 Abre una nueva sesión y lanza:
 
 ```
-/add-tests archiveNote
+/add-tests archive
 ```
 
 Confirma que la skill se activa y genera los tests con las convenciones definidas.
@@ -27,9 +27,9 @@ Confirma que la skill se activa y genera los tests con las convenciones definida
 
 Añade una `description:` al frontmatter de la skill. Tiene que ser lo suficientemente específica para activarse con:
 
-- "tests para archiveNote"
-- "cubre con tests la función createNote"
-- "añade tests a unarchiveNote"
+- "tests para archive"
+- "cubre con tests la función create"
+- "añade tests a unarchive"
 
 Pero NO debe activarse con:
 
