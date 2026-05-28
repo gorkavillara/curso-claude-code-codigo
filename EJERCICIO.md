@@ -1,11 +1,24 @@
 # Ejercicio 2 — Comentarios de review accionables
 
 > **Tiempo estimado:** 15 min · **Rama:** `tema-15/ejercicio-02`
-> **Arranque:** `npm install && npm test`. Necesitas un diff sobre `main` para comentar.
+> **Arranque:** `npm install && npm test` (tests verdes).
+> **Baseline para comparar el PR:** `tema-15/inicio`.
 
 ## Objetivo
 
-Generar **3-4 comentarios de review** sobre el PR del Ejercicio 1, siguiendo un patrón de 4 partes: ubicación, observación, por qué importa (citando regla del repo), sugerencia accionable. Cada comentario debe ser aplicable sin pedir más contexto al autor.
+Generar **3-4 comentarios de review** sobre el PR plantado en esta rama, siguiendo un patrón de 4 partes: ubicación, observación, por qué importa (citando regla del repo), sugerencia accionable. Cada comentario debe ser aplicable sin pedir más contexto al autor.
+
+---
+
+## Sobre el PR
+
+La rama actual contiene **el mismo PR plantado** que el Ejercicio 1: añade `POST /notes/archive-bulk` con varios problemas (validación movida, logs de debug, error genérico, dependencia añadida).
+
+Verifica el diff excluyendo el enunciado:
+
+```bash
+git diff tema-15/inicio...HEAD -- ':!EJERCICIO.md'
+```
 
 ---
 
@@ -34,6 +47,7 @@ Antes de pedir comentarios a Claude, lee el `CLAUDE.md` del repo (si existe) y a
 - Errores semánticos del dominio (`NoteNotFoundError`), no `Error` genérico.
 - Cualquier cambio en `services/` tiene tests asociados.
 - Las firmas públicas no cambian sin razón explícita.
+- Dependencias nuevas requieren justificación en la descripción del PR.
 
 ---
 
@@ -41,7 +55,7 @@ Antes de pedir comentarios a Claude, lee el `CLAUDE.md` del repo (si existe) y a
 
 ```
 [CONTEXTO]
-Diff actual contra main. Reglas del CLAUDE.md (cito):
+Diff actual contra tema-15/inicio (excluye EJERCICIO.md). Reglas del CLAUDE.md:
 - <Pega aquí 3-4 reglas relevantes del CLAUDE.md.>
 
 [OBJETIVO]
@@ -62,7 +76,7 @@ Para **cada** comentario, comprueba:
 
 1. **Las 4 partes están?** Si falta alguna, reescribe.
 2. **¿La sugerencia es aplicable sin más contexto?** "Considera refactorizar" no lo es; "extrae la validación de longitud al servicio en la línea X" sí.
-3. **¿La justificación cita una regla concreta del repo?** Si dice "buena práctica", reescríbela citando el CLAUDE.md o una consecuencia técnica verificable.
+3. **¿La justificación cita una regla concreta del repo?** Si dice "buena práctica", reescríbela citando el `CLAUDE.md` o una consecuencia técnica verificable.
 4. **¿Empieza con "creo que" / "no sé si"?** Eso es duda, no comentario. Borrar o decidir.
 
 ## Parte C — Aplicar tu criterio (2 min)
