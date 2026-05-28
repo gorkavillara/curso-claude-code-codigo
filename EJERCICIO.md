@@ -9,37 +9,17 @@ Resolver un conflicto de merge **preservando ambas intenciones** (no `--ours` ni
 
 ---
 
-## Escenario del conflicto
+## Escenario del conflicto (ya plantado)
 
-```
-main añadió logging dentro de search() en src/search/index.ts:
-  console.log(`[search] q=${q}, total=${notes.length}`);
+Esta rama `tema-18/ejercicio-02` **ya tiene** un cambio aplicado en `src/search/index.ts` que simula lo que entró en `main`:
 
-feature/normalize-search añadió normalización (toLowerCase + NFD) en search().
-
-Ambas ramas tocan la misma función. Git señala el conflicto sintáctico.
-El conflicto semántico (¿son compatibles? ¿en qué orden viven los bloques?)
-te toca a ti.
+```ts
+console.log(`[search] q=${query}, total=${notes.length}`);
 ```
 
-Para reproducir el escenario en tu copia local:
+Existe además una rama paralela **`tema-18/feature-normalize-search`** que añade `normalize()` (toLowerCase + NFD) en la misma función `search()`.
 
-```bash
-# 1) Estás en tema-18/ejercicio-02.
-# 2) Crea una rama feature ficticia que añade normalize a search().
-git checkout -b feature/normalize-search-local
-# (modifica src/search/index.ts añadiendo normalize y aplicándolo)
-git commit -am "feat(search): normalize query and title"
-
-# 3) Vuelve a tema-18/ejercicio-02 y simula main que añade logging.
-git checkout tema-18/ejercicio-02
-# (modifica src/search/index.ts añadiendo console.log al inicio de search())
-git commit -am "feat(search): add log line for tracing"
-
-# 4) Intenta mergear la feature:
-git merge feature/normalize-search-local
-# Aparece el conflicto.
-```
+Cuando intentes mergear, Git señalará un conflicto sintáctico en `src/search/index.ts`. El conflicto **semántico** (¿son compatibles? ¿en qué orden viven los bloques?) te toca a ti.
 
 > Si elegís `--ours` o `--theirs`, **perdéis cambios buenos**. Eso es lo opuesto de resolver: es ocultar el conflicto.
 
@@ -47,12 +27,18 @@ git merge feature/normalize-search-local
 
 ## Parte A — Análisis ANTES de tocar el archivo (5 min)
 
-**No abras el editor todavía.** Lanza este prompt:
+Lanza el merge:
+
+```bash
+git merge tema-18/feature-normalize-search
+```
+
+Git debe responder con un conflicto en `src/search/index.ts`. **No abras el editor todavía.** Lanza este prompt:
 
 ```
 [CONTEXTO]
-Conflicto en src/search/index.ts tras `git merge feature/normalize-search-local`.
-Main: añadió `console.log` al inicio de search() para tracing.
+Conflicto en src/search/index.ts tras `git merge tema-18/feature-normalize-search`.
+Main (rama actual): añadió `console.log` al inicio de search() para tracing.
 Feature: añadió la función normalize() y la usa para query y title.
 
 [OBJETIVO]
@@ -79,12 +65,14 @@ function normalize(s: string): string {
   return s.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
 }
 
-export function search(notes: Note[], q: string): Note[] {
-  console.log(`[search] q=${q}, total=${notes.length}`);
-  const needle = normalize(q);
-  return notes.filter(n =>
-    normalize(n.title).includes(needle) || normalize(n.body).includes(needle)
-  );
+export function search(notes: Note[], query: string | undefined | null): Note[] {
+  console.log(`[search] q=${query}, total=${notes?.length}`);
+  if (!query) return [];
+  const q = normalize(query.trim());
+  return notes.filter((note) => {
+    const haystack = normalize(`${note.title} ${note.body}`);
+    return haystack.includes(q);
+  });
 }
 ```
 
@@ -92,25 +80,33 @@ Cierra el conflicto:
 
 ```bash
 git add src/search/index.ts
-git commit    # mensaje pre-rellenado con el merge
+git commit       # mensaje pre-rellenado con el merge
 ```
 
 ## Parte C — Test que cubre AMBAS intenciones (5 min)
 
-Añade en `test/notes.search.test.ts`:
+Añade en `test/notes.search.test.ts` (créalo si no existe):
 
 ```ts
-test('search loguea la query y normaliza acentos/mayúsculas', async (t) => {
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { search } from '../src/search/index.ts';
+import { createNote } from '../src/models/note.ts';
+
+test('search loguea la query y normaliza acentos/mayúsculas', () => {
   const logs: string[] = [];
   const originalLog = console.log;
-  console.log = (msg: string) => logs.push(msg);
-  t.after(() => { console.log = originalLog; });
+  console.log = (msg: string) => logs.push(String(msg));
 
-  // setup: guarda una nota con title "Mañana"
-  const result = await searchNotes('MAÑANA');
+  try {
+    const note = createNote({ title: 'Mañana', body: 'reunion' });
+    const result = search([note], 'MAÑANA');
 
-  assert.equal(result.length, 1);
-  assert.ok(logs.some(l => l.includes('[search]')), 'debe loguear la query');
+    assert.equal(result.length, 1);
+    assert.ok(logs.some((l) => l.includes('[search]')), 'debe loguear la query');
+  } finally {
+    console.log = originalLog;
+  }
 });
 ```
 
@@ -127,9 +123,9 @@ npm test
 
 ```bash
 git log --oneline --graph -10
-# Debes ver el commit de merge entre main y feature/normalize-search-local.
+# Debes ver el commit de merge entre tema-18/ejercicio-02 y feature-normalize-search.
 
-git diff main..HEAD -- src/search/index.ts
+git diff tema-18/inicio..HEAD -- src/search/index.ts
 # Debe contener AMBOS cambios (log + normalize).
 ```
 
@@ -139,8 +135,8 @@ git diff main..HEAD -- src/search/index.ts
 
 ### Análisis de intenciones (Parte A)
 
-- Intención de main: ...
-- Intención de feature: ...
+- Intención de la rama actual: ...
+- Intención de feature/normalize-search: ...
 - ¿Compatibles? Sí/No, y por qué.
 
 ### Archivo final (resumen)
