@@ -32,3 +32,25 @@ notesRouter.post('/:id/unarchive', (req: Request, res: Response) => {
   if (!result) return res.status(404).json({ error: 'not found' });
   res.json(result);
 });
+
+notesRouter.post('/archive-bulk', (req: Request, res: Response) => {
+  console.log('[archive-bulk] body:', req.body);
+  const { ids } = (req.body ?? {}) as { ids?: unknown };
+  if (!Array.isArray(ids)) {
+    return res.status(400).json({ error: 'ids must be an array' });
+  }
+  if (ids.length > 100) {
+    return res.status(400).json({ error: 'too many ids' });
+  }
+  for (const id of ids) {
+    if (typeof id !== 'string' || id.length === 0) {
+      return res.status(400).json({ error: 'invalid id' });
+    }
+  }
+  try {
+    const result = notesService.archiveBulk(ids as string[]);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: (err as Error).message });
+  }
+});
