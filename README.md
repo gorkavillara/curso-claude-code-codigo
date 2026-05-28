@@ -1,8 +1,8 @@
-# Notebox — repo de prácticas del Tema 12 (Refactorización)
+# Notebox — repo de prácticas del Tema 13 (Testing asistido)
 
-> Rama `tema-12/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-13/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 12 se usa para practicar **refactorización profunda con criterio**: detectar olores priorizados por impacto, extraer lógica duplicada con tests verdes en cada paso y documentar el refactor para que sea revisable en 2 minutos.
+API de notas (Node 24 + Express + TypeScript). En el Tema 13 se usa para practicar **testing con criterio**: diseñar la estrategia antes de escribir tests, convertir bugs en tests de regresión (rojo primero, verde después) y detectar tests frágiles/redundantes en una suite real.
 
 ## Endpoints actuales
 
