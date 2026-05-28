@@ -1,19 +1,24 @@
 # Ejercicio 1 — Revisar un PR: resumen y priorización de riesgos
 
 > **Tiempo estimado:** 15 min · **Rama:** `tema-15/ejercicio-01`
-> **Arranque:** `npm install && npm test`. Necesitas un PR/diff sobre `main` para revisar.
+> **Arranque:** `npm install && npm test` (tests verdes).
+> **Baseline para comparar el PR:** `tema-15/inicio`.
 
 ## Objetivo
 
-Generar el resumen de un PR en 5 puntos y marcar los **3 más arriesgados** con archivo+línea+motivo verificable. Verificar a mano al menos 2 de los riesgos antes de cerrar el ejercicio.
+Generar el resumen del PR en 5 puntos y marcar los **3 más arriesgados** con archivo+línea+motivo verificable. Verificar a mano al menos 2 de los riesgos antes de cerrar el ejercicio.
 
 ---
 
-## Contexto
+## El PR bajo revisión
 
-El instructor habrá plantado un PR sobre `main` con varios cambios mezclados: algunos benignos, otros problemáticos (validación movida de capa, error genérico, `console.log` de depuración, dependencia nueva sin justificación, cambio sin tests, etc.).
+La rama actual contiene **un PR plantado encima de `tema-15/inicio`** que añade el endpoint `POST /notes/archive-bulk` y trae varios cambios mezclados (algunos benignos, otros problemáticos). El `EJERCICIO.md` también está incluido en el diff de la rama pero **NO forma parte del PR a revisar** — es el enunciado.
 
-Si trabajas en solitario, usa cualquier rama con cambios recientes sobre `main` como objetivo del review.
+Compáralo con la baseline excluyendo el enunciado:
+
+```bash
+git diff tema-15/inicio...HEAD -- ':!EJERCICIO.md'
+```
 
 > El primer barrido no es leer el diff de arriba abajo. Es decidir **dónde mirar primero**.
 
@@ -22,9 +27,10 @@ Si trabajas en solitario, usa cualquier rama con cambios recientes sobre `main` 
 ## Parte A — Generar el resumen (5 min)
 
 ```
-Compara la rama actual con main. Resume los cambios en 5 puntos máximo.
-Marca los 3 más arriesgados con justificación basada en código (no en
-intuición). Cita rutas y líneas para cada riesgo.
+Compara la rama actual con tema-15/inicio (excluye EJERCICIO.md del diff).
+Resume los cambios reales en 5 puntos máximo. Marca los 3 más arriesgados
+con justificación basada en código (no en intuición). Cita rutas y líneas
+para cada riesgo.
 
 Si la rama no tiene 3 cambios arriesgados, dilo. No fuerces 3.
 ```
@@ -34,7 +40,7 @@ Si la rama no tiene 3 cambios arriesgados, dilo. No fuerces 3.
 Para cada uno de los 3 riesgos marcados:
 
 1. **Abre el archivo y la línea.** ¿Existen? ¿Dicen lo que Claude dice?
-2. **Comprueba la regla citada.** Si Claude dice "viola el CLAUDE.md", lee el CLAUDE.md y confirma.
+2. **Comprueba la regla citada.** Si Claude dice "viola el CLAUDE.md", lee el `CLAUDE.md` y confirma.
 3. **Considera el escenario malicioso o el cambio futuro:** ¿qué pasa concretamente si se mergea esto tal cual?
 
 Marca cada riesgo con ✅ (verificado) o ⚠️ (alucinación / falso positivo).
@@ -43,7 +49,7 @@ Marca cada riesgo con ✅ (verificado) o ⚠️ (alucinación / falso positivo).
 
 ## Parte C — Añadir lo que Claude no marcó (2 min)
 
-Lee el diff entero (`git diff main...HEAD`) durante 90 segundos. Si encuentras algo arriesgado que Claude no mencionó, añádelo como Riesgo 4.
+Lee el diff entero (`git diff tema-15/inicio...HEAD -- ':!EJERCICIO.md'`) durante 90 segundos. Si encuentras algo arriesgado que Claude no mencionó, añádelo como Riesgo 4.
 
 > Detectar algo que Claude no detectó es la mejor señal de que estás revisando con criterio.
 
