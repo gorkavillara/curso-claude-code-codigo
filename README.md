@@ -1,10 +1,10 @@
-# Notebox — repo de prácticas del Tema 15 (Code review asistido)
+# Notebox — repo de prácticas del Tema 16 (Seguridad)
 
-> Rama `tema-15/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-16/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 15 se usa para practicar **code review con criterio**: priorizar riesgos antes de leer línea a línea, escribir comentarios accionables citando reglas del proyecto y preparar descripciones de PR que reducen comentarios redundantes.
+API de notas (Node 24 + Express + TypeScript). En el Tema 16 se usa para practicar **seguridad aplicada**: auditar inputs sin sanear, detectar exposición de secretos (`.env`, logs, errores informativos) y revisar endpoints contra OWASP traducido al código concreto.
 
-> En el Tema 15 se trabaja además sobre un **PR plantado** que el instructor entrega como base de los ejercicios. Si trabajas en solitario, cualquier diff reciente sobre `src/` te sirve como práctica.
+> El Tema 16 trabaja con un repo que tiene **problemas plantados** (inputs sin validar, `.env` versionado con clave demo, `console.log` que imprime el body). Los ejercicios consisten en detectarlos y mitigarlos.
 
 ## Endpoints actuales
 
