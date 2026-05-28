@@ -1,10 +1,8 @@
-# Notebox — repo de prácticas del Tema 16 (Seguridad)
+# Notebox — repo de prácticas del Tema 17 (Dependencias y migraciones)
 
-> Rama `tema-16/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-17/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 16 se usa para practicar **seguridad aplicada**: auditar inputs sin sanear, detectar exposición de secretos (`.env`, logs, errores informativos) y revisar endpoints contra OWASP traducido al código concreto.
-
-> El Tema 16 trabaja con un repo que tiene **problemas plantados** (inputs sin validar, `.env` versionado con clave demo, `console.log` que imprime el body). Los ejercicios consisten en detectarlos y mitigarlos.
+API de notas (Node 24 + Express + TypeScript). En el Tema 17 se usa para practicar **gestión de dependencias y migraciones**: diagnóstico de salud del repo (`npm outdated` + `npm audit` + grep de uso), diseño de plan de migración por fases con verificación tras cada una y codemods idempotentes para breaking changes mecánicos.
 
 ## Endpoints actuales
 
