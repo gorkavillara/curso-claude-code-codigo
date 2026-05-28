@@ -1,11 +1,22 @@
 # Ejercicio 3 — Descripción de PR con bloque "fuera del scope"
 
 > **Tiempo estimado:** 15 min · **Rama:** `tema-15/ejercicio-03`
-> **Arranque:** `npm install && npm test`. Necesitas un PR sobre `main`.
+> **Arranque:** `npm install && npm test` (tests verdes).
+> **Baseline para comparar el PR:** `tema-15/inicio`.
 
 ## Objetivo
 
-Preparar la descripción de un PR revisable en **menos de 2 minutos**, en **≤200 palabras**, con el bloque "Fuera del scope" relleno con al menos 2 entradas reales.
+Preparar la descripción del PR plantado en esta rama (el endpoint `POST /notes/archive-bulk`), revisable en **menos de 2 minutos**, en **≤200 palabras**, con el bloque "Fuera del scope" relleno con al menos 2 entradas reales.
+
+---
+
+## Sobre el PR
+
+La rama actual contiene **el mismo PR plantado** que en los Ejercicios 1 y 2: añade `POST /notes/archive-bulk`. Tu trabajo es **escribir la descripción** que acompañaría ese PR al abrirlo.
+
+```bash
+git diff tema-15/inicio...HEAD -- ':!EJERCICIO.md'
+```
 
 ---
 
@@ -40,10 +51,11 @@ NO "buena práctica", "mejora general".>
 
 El reviewer pregunta cosas que el autor decidió **no hacer en este PR** porque las dejaba fuera del alcance. Si el autor lo dice antes, el reviewer no lo pide.
 
-Ejemplos típicos:
-- "No se filtran archivadas en `GET /notes` — lo decide el cliente con un query param en el próximo PR."
-- "No se implementa `unarchive` aquí — irá en PR siguiente para mantener este pequeño."
-- "No se cambian las rutas existentes ni el contrato público."
+Ejemplos típicos sobre el PR plantado:
+- "No se implementa `unarchiveBulk` aquí — irá en PR siguiente."
+- "No se cambian las rutas existentes ni el contrato de `POST /notes/:id/archive`."
+- "No se introduce auth en este endpoint — Notebox sigue siendo público por diseño."
+- "No se filtran archivadas en `GET /notes` (decisión del cliente con query param)."
 
 > "El bloque 'fuera del scope' es vuestra defensa contra el review-trolling."
 
@@ -52,8 +64,8 @@ Ejemplos típicos:
 ## Parte A — Generar la descripción (5 min)
 
 ```
-Genera la descripción del PR para los cambios de la rama actual contra main.
-Estructura obligatoria:
+Genera la descripción del PR para los cambios de la rama actual contra
+tema-15/inicio (excluye EJERCICIO.md del diff). Estructura obligatoria:
 1. Qué cambia (bullets, archivos concretos).
 2. Por qué ahora (motivo verificable, no genérico).
 3. Cómo verificar (comandos exactos).
