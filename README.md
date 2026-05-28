@@ -2,14 +2,14 @@
 
 > Rama `tema-14/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 14 se usa para practicar **documentación técnica con criterio**: README minimalista verificado contra el repo, ADR de una decisión real y detección/reparación de drift entre docs y código.
+API de notas (Node 24 + Express + TypeScript) con **almacenamiento persistente entre arranques**. En el Tema 14 se usa para practicar **documentación técnica con criterio**: README minimalista verificado contra el repo, ADR de una decisión real y detección/reparación de drift entre docs y código.
 
 ## Endpoints actuales
 
 - `POST   /notes`               — crear nota `{ title, body }`
 - `GET    /notes`               — listar (`?archived=true`)
 - `GET    /notes/search`        — buscar `?q=...`
-- `POST   /notes/:id/archive`
+- `DELETE /notes/:id`           — borrar nota
 - `POST   /notes/:id/unarchive`
 
 ## Estructura del proyecto
@@ -26,6 +26,17 @@ test/
   notes.service.test.ts
   storage.test.ts
 ```
+
+## Comandos útiles
+
+| Comando | Qué hace |
+|---|---|
+| `npm install` | Instala dependencias |
+| `npm test` | Ejecuta la suite completa |
+| `npm run lint` | Pasa ESLint sobre `src/` y `test/` |
+| `npm run typecheck` | TypeScript en modo `--noEmit` |
+| `npm run dev` | Servidor en modo desarrollo (`:3000`) |
+| `npm run build` | Compila a `dist/` |
 
 ## Arranque
 
