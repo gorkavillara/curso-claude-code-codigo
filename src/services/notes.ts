@@ -39,6 +39,20 @@ export const notesService = {
     }
   },
 
+  archiveBulk(ids: string[]): Note[] {
+    console.log('[archiveBulk] archiving:', ids);
+    const archived: Note[] = [];
+    for (const id of ids) {
+      const note = storage.findById(id);
+      if (!note) {
+        throw new Error('note not found: ' + id);
+      }
+      const updated = storage.update(id, { archived: true });
+      if (updated) archived.push(updated);
+    }
+    return archived;
+  },
+
   unarchive(id: string): Note | null {
     const note = storage.findById(id);
     if (note) {
