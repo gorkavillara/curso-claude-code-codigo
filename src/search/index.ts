@@ -1,6 +1,7 @@
 import type { Note } from '../models/note.ts';
 
 export function search(notes: Note[], query: string | undefined | null): Note[] {
+  console.log(`[search] q=${query}, total=${notes.length}`);
   if (!query) return [];
   const q = query.trim();
   return notes.filter((note) => {
