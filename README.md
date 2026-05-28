@@ -1,8 +1,8 @@
-# Notebox — repo de prácticas del Tema 13 (Testing asistido)
+# Notebox — repo de prácticas del Tema 14 (Documentación técnica)
 
-> Rama `tema-13/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-14/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 13 se usa para practicar **testing con criterio**: diseñar la estrategia antes de escribir tests, convertir bugs en tests de regresión (rojo primero, verde después) y detectar tests frágiles/redundantes en una suite real.
+API de notas (Node 24 + Express + TypeScript). En el Tema 14 se usa para practicar **documentación técnica con criterio**: README minimalista verificado contra el repo, ADR de una decisión real y detección/reparación de drift entre docs y código.
 
 ## Endpoints actuales
 
