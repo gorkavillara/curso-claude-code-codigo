@@ -39,6 +39,18 @@ export const notesService = {
     }
   },
 
+  delete(id: string): boolean {
+    return storage.delete(id);
+  },
+
+  deleteAll(): number {
+    const count = storage.list().length;
+    for (const note of storage.list()) {
+      storage.delete(note.id);
+    }
+    return count;
+  },
+
   unarchive(id: string): Note | null {
     const note = storage.findById(id);
     if (note) {

@@ -30,6 +30,10 @@ export const storage = {
     return next;
   },
 
+  delete(id: string): boolean {
+    return notes.delete(id);
+  },
+
   _reset(): void {
     notes.clear();
   },

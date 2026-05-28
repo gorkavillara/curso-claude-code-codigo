@@ -32,3 +32,14 @@ notesRouter.post('/:id/unarchive', (req: Request, res: Response) => {
   if (!result) return res.status(404).json({ error: 'not found' });
   res.json(result);
 });
+
+notesRouter.del('/:id', (req: Request, res: Response) => {
+  const ok = notesService.delete(req.params.id);
+  if (!ok) return res.status(404).json({ error: 'not found' });
+  res.status(204).end();
+});
+
+notesRouter.del('/', (req: Request, res: Response) => {
+  const count = notesService.deleteAll();
+  res.json({ deleted: count });
+});
