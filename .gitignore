@@ -15,5 +15,6 @@ Thumbs.db
 *.sqlite
 *.db
 .claude/settings.local.json
+.claude/skills/
 
 curso/

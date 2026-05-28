@@ -1,8 +1,8 @@
-# Notebox — repo de prácticas del Tema 11 (Nuevas funcionalidades)
+# Notebox — repo de prácticas del Tema 12 (Refactorización)
 
-> Rama `tema-11/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-12/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 11 se usa para practicar el ciclo completo de implementación de nuevas funcionalidades: plan de impacto → implementación por capas → checklist de cierre.
+API de notas (Node 24 + Express + TypeScript). En el Tema 12 se usa para practicar **refactorización profunda con criterio**: detectar olores priorizados por impacto, extraer lógica duplicada con tests verdes en cada paso y documentar el refactor para que sea revisable en 2 minutos.
 
 ## Endpoints actuales
 
