@@ -1,8 +1,10 @@
-# Notebox — repo de prácticas del Tema 14 (Documentación técnica)
+# Notebox — repo de prácticas del Tema 15 (Code review asistido)
 
-> Rama `tema-14/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-15/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 14 se usa para practicar **documentación técnica con criterio**: README minimalista verificado contra el repo, ADR de una decisión real y detección/reparación de drift entre docs y código.
+API de notas (Node 24 + Express + TypeScript). En el Tema 15 se usa para practicar **code review con criterio**: priorizar riesgos antes de leer línea a línea, escribir comentarios accionables citando reglas del proyecto y preparar descripciones de PR que reducen comentarios redundantes.
+
+> En el Tema 15 se trabaja además sobre un **PR plantado** que el instructor entrega como base de los ejercicios. Si trabajas en solitario, cualquier diff reciente sobre `src/` te sirve como práctica.
 
 ## Endpoints actuales
 
