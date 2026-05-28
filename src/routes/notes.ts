@@ -4,6 +4,7 @@ import { notesService } from '../services/notes.ts';
 export const notesRouter: Router = Router();
 
 notesRouter.post('/', (req: Request, res: Response) => {
+  console.log('[POST /notes] Request body:', req.body);
   const { title, body } = (req.body ?? {}) as { title?: string; body?: string };
   const note = notesService.create({ title: title as string, body });
   res.status(201).json(note);
