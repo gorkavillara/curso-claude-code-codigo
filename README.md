@@ -1,8 +1,10 @@
-# Notebox — repo de prácticas del Tema 17 (Dependencias y migraciones)
+# Notebox — repo de prácticas del Tema 18 (Git, branching y conflictos)
 
-> Rama `tema-17/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
+> Rama `tema-18/inicio`. El código vive en la raíz: `src/`, `test/`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript). En el Tema 17 se usa para practicar **gestión de dependencias y migraciones**: diagnóstico de salud del repo (`npm outdated` + `npm audit` + grep de uso), diseño de plan de migración por fases con verificación tras cada una y codemods idempotentes para breaking changes mecánicos.
+API de notas (Node 24 + Express + TypeScript). En el Tema 18 se usa para practicar **Git con criterio**: hotfixes acotados desde producción, resolución de conflictos con razonamiento semántico (no `--ours`/`--theirs`) y reorganización de commits antes de abrir PR.
+
+> Este tema asume que existe un **bug plantado** en `search()` (busca case-sensitive, no normaliza acentos) para los hotfixes, y una rama feature `feature/normalize-search` que entra en conflicto con `main` para el ejercicio de merge.
 
 ## Endpoints actuales
 
