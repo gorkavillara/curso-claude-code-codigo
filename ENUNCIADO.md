@@ -1,7 +1,7 @@
 # Proyecto final — Flujo completo de ingeniería asistida con Claude Code
 
 > **Tipo:** proyecto individual · **Rama:** `proyecto-final` · **Entrega:** el último día del curso
-> **Defensa:** cada participante presenta su proyecto en 8-10 minutos al grupo.
+> **Defensa:** cada participante presenta su proyecto en 5 minutos al grupo.
 > **Votación:** al final de las presentaciones, el grupo vota 1º, 2º y 3º puesto. Dos categorías: **Originalidad** e **Implementación**.
 
 ## Objetivo
