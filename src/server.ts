@@ -1,4 +1,5 @@
 import express, { type Express } from 'express';
+import { pathToFileURL } from 'node:url';
 import { notesRouter } from './routes/notes.ts';
 
 export function buildApp(): Express {
@@ -9,7 +10,7 @@ export function buildApp(): Express {
   return app;
 }
 
-const isMain = import.meta.url === `file://${process.argv[1]}`;
+const isMain = import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isMain) {
   const port = process.env.PORT ?? 3000;
   buildApp().listen(port, () => {
