@@ -10,19 +10,11 @@
       "Bash(git diff:*)",
       "Bash(git log:*)",
       "mcp__filesystem__read_file",
-      "mcp__filesystem__read_multiple_files",
-      "mcp__filesystem__list_directory",
-      "mcp__filesystem__directory_tree",
-      "mcp__filesystem__search_files",
-      "mcp__filesystem__get_file_info",
-      "mcp__filesystem__list_allowed_directories",
-      "mcp__notebox__notebox_list_notes",
-      "mcp__notebox__notebox_get_note"
+      "mcp__filesystem__list_directory"
     ],
     "deny": [
       "Read(./.env)",
-      "Bash(rm -rf *)",
-      "mcp__notebox__notebox_delete_note"
+      "Bash(rm -rf *)"
     ]
   }
 }
