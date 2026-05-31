@@ -6,6 +6,7 @@ export function buildApp(): Express {
   app.use(express.json());
   app.use('/notes', notesRouter);
   app.get('/health', (_req, res) => res.json({ ok: true }));
+  app.del('/legacy/cache', (_req, res) => res.status(204).end());
   return app;
 }
 
