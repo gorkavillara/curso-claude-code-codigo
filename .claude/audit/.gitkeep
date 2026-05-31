@@ -1,0 +1,2 @@
+# Carpeta donde el hook PreToolUse escribe bash.log. Se mantiene aqui para
+# que exista al clonar el repo y el hook pueda hacer append directo.

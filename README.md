@@ -1,44 +1,49 @@
-# Notebox — repo de prácticas del Tema 20 (MCP)
+# Notebox — repo de prácticas del Tema 21 (Plugins, hooks y extensibilidad)
 
-> Rama `tema-20/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). El servidor MCP propio del tema vive en `mcp-servers/notebox/`. La carpeta `curso/` está ignorada.
+> Rama `tema-21/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). El servidor MCP propio del Tema 20 sigue plantado (`mcp-servers/notebox/`). Para el Tema 21 se añade el plugin local `pr-helper` en `.claude/plugins/` con sus commands, hook, skill y agente, y un hook `PreToolUse` declarado en `.claude/settings.json`. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript) **más** un servidor MCP propio sobre las mismas notas. En el Tema 20 se usa para practicar **MCP oficial, conectores y servidores propios**: configurar `.mcp.json`, listar tools y resources, gobernar con allowlists/denylists y extender el servidor con tools nuevas.
+API de notas (Node 24 + Express + TypeScript) **más** un servidor MCP propio **más** un plugin local del equipo de plataforma. En el Tema 21 el repo se usa para practicar **plugins, marketplaces, hooks y extensibilidad**: activar el plugin plantado, extender hooks de gobierno y empaquetar capacidades nuevas.
 
-## Qué hay plantado para el Tema 20
+## Qué hay plantado para el Tema 21
 
 | Pieza | Ruta | Para qué |
 |---|---|---|
-| `.mcp.json` | raíz | Conecta dos servidores stdio: `filesystem` (oficial) y `notebox` (propio) |
-| Servidor MCP propio | `mcp-servers/notebox/server.js` | Expone tools y resources sobre un almacén in-memory de notas |
-| Reglas de gobierno | `.claude/settings.json` | Allowlist + denylist iniciales para MCP, Bash y Read |
-| Subagentes (del Tema 19) | `.claude/agents/` | `code-reviewer` y `security-auditor` siguen disponibles |
+| Plugin local `pr-helper` | `.claude/plugins/pr-helper/` | Empaqueta 2 commands, 1 hook `PreToolUse`, 1 skill y 1 agente |
+| Hook `PreToolUse` | `.claude/plugins/pr-helper/hooks/pre-bash-audit.sh` | Loguea cada `Bash` a `.claude/audit/bash.log` |
+| Settings con hook activo | `.claude/settings.json` (clave `hooks`) | Conecta el script anterior al evento `PreToolUse` filtrado por `Bash` |
+| Marketplace ficticio | `.claude/plugins/marketplace.json` | Muestra la forma de un índice de marketplace interno |
+| Carpeta de auditoría | `.claude/audit/` | Destino del log del hook (con `.gitkeep` para que exista al clonar) |
+| MCP del Tema 20 | `mcp-servers/notebox/` + `.mcp.json` | Sigue disponible para demostrar plugins que empaquetan MCPs |
+| Subagentes del Tema 19 | `.claude/agents/` | `code-reviewer` y `security-auditor` se mantienen |
 
-> El servidor MCP `notebox` es **un proceso aparte** del HTTP del Notebox. No comparten estado. Es deliberado para que el ejercicio funcione sin arrancar dos servicios.
+> El plugin está **plantado pero no necesariamente activo en sesión**: la primera vez que abras Claude Code, según versión, puede pedirte aceptar `enabledPlugins`. El `EJERCICIO.md` de cada rama cubre cómo activarlo en cada caso.
 
-## Catálogo del servidor MCP `notebox`
+## Catálogo del plugin `pr-helper`
 
-### Tools
+### Commands
 
-| Nombre | Operación | inputSchema |
+| Comando | Para qué |
+|---|---|
+| `/pr-helper:summary` | Resume el PR actual a partir del diff frente a `main` |
+| `/pr-helper:checklist` | Devuelve la checklist de revisión interna del equipo |
+
+### Hook
+
+| Evento | Script | Comportamiento por defecto en `tema-21/inicio` |
 |---|---|---|
-| `notebox_list_notes` | Lectura | `{ archived?: boolean }` |
-| `notebox_get_note` | Lectura | `{ id: string }` |
-| `notebox_create_note` | Mutante | `{ title: string, body: string }` |
-| `notebox_archive_note` | Mutante | `{ id: string }` |
-| `notebox_delete_note` | Destructiva (denylist por defecto) | `{ id: string }` |
+| `PreToolUse` (filtrado por `Bash`) | `.claude/plugins/pr-helper/hooks/pre-bash-audit.sh` | Loguea, no bloquea. El Ejercicio 2 lo extiende para bloquear `rm -rf` y `.env`. |
 
-### Resources
+### Skill
 
-- `notebox://notes` — listado completo en JSON.
-- `notebox://note/{id}` — una nota concreta por id (template).
+| Skill | Trigger |
+|---|---|
+| `commit-msg-style` | Cuando el usuario pide redactar o sugerir un mensaje de commit |
 
-## Endpoints HTTP (del Notebox clásico)
+### Agent
 
-- `POST   /notes`               — crear nota `{ title, body }`
-- `GET    /notes`               — listar (`?archived=true`)
-- `GET    /notes/search`        — buscar `?q=...`
-- `POST   /notes/:id/archive`
-- `POST   /notes/:id/unarchive`
+| Agente | Cuándo |
+|---|---|
+| `pr-reviewer` | Para revisar PRs con la plantilla interna del equipo |
 
 ## Estructura del proyecto
 
@@ -54,35 +59,38 @@ test/
   notes.service.test.ts
   storage.test.ts
   mcp-notebox.test.ts    # Smoke test del servidor MCP
+  plugin-pr-helper.test.ts # Smoke test del plugin (estructura mínima)
 mcp-servers/
-  notebox/
-    server.js            # Servidor MCP stdio sobre el almacén in-memory
-    README.md            # Cómo extender el servidor
-.mcp.json                # Configuración de servidores MCP del proyecto
+  notebox/               # Servidor MCP del Tema 20 (sigue activo)
+.mcp.json                # Servidores MCP del proyecto
 .claude/
-  agents/                # Subagentes del Tema 19 (siguen plantados)
-  settings.json          # Allowlists/denylists del proyecto (incluyen reglas MCP)
+  agents/                # Subagentes del Tema 19
+  audit/                 # Destino del hook PreToolUse
+  plugins/
+    pr-helper/           # Plugin local del Tema 21
+      plugin.json
+      README.md
+      commands/
+      hooks/
+      skills/
+      agents/
+    marketplace.json     # Índice ficticio de marketplace interno
+  settings.json          # Permissions, enabledPlugins y hooks del proyecto
 ```
 
 ## Arranque
 
 ```bash
 npm install
-npm test        # 3 suites verdes (notes.service, storage, mcp-notebox)
+npm test        # 4 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper)
 ```
 
-Para usar los servidores MCP, lanza Claude Code en la raíz del repo. La primera vez te pedirá confirmar que confías en los servidores declarados en `.mcp.json` (es la convención de seguridad — aceptarlo solo si has revisado el archivo).
+Para usar el plugin en sesión, lanza Claude Code en la raíz del repo. Según la versión instalada, el plugin se activará automáticamente al estar en `enabledPlugins`, o tendrás que ejecutar `/plugin enable pr-helper`.
 
-## Smoke test del servidor MCP sin Claude
+## Smoke test del plugin sin Claude
 
-```bash
-node mcp-servers/notebox/server.js
-# stderr: [notebox-mcp] server ready on stdio
-# Ctrl+C para salir.
-```
+El smoke test del plugin se ejecuta como cualquier otra suite con `npm test`. Valida la estructura del `plugin.json` y que los archivos declarados existen. No ejecuta los commands ni dispara el hook.
 
-Para inspeccionar el handshake interactivamente:
+## Sobre marketplaces remotos
 
-```bash
-npx @modelcontextprotocol/inspector node mcp-servers/notebox/server.js
-```
+El `marketplace.json` plantado es **ficticio**: no hay endpoint detrás. Vive en el repo como ejemplo de la forma del índice. En un entorno real, este archivo se serviría desde un bucket o repo central y se referenciaría en `extraKnownMarketplaces` del `settings.json`.

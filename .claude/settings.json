@@ -9,6 +9,8 @@
       "Bash(npm run *)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
+      "Bash(ls:*)",
+      "Bash(node --version)",
       "mcp__filesystem__read_file",
       "mcp__filesystem__read_multiple_files",
       "mcp__filesystem__list_directory",
@@ -23,6 +25,22 @@
       "Read(./.env)",
       "Bash(rm -rf *)",
       "mcp__notebox__notebox_delete_note"
+    ]
+  },
+  "enabledPlugins": [
+    "pr-helper"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/plugins/pr-helper/hooks/pre-bash-audit.sh"
+          }
+        ]
+      }
     ]
   }
 }

@@ -1,0 +1,18 @@
+{
+  "name": "imagina-internal",
+  "description": "Marketplace ficticio interno del equipo de plataforma. NO es un endpoint real: vive como archivo del repo para mostrar la forma del indice. En produccion seria un JSON servido por un bucket o un repo central.",
+  "plugins": [
+    {
+      "name": "pr-helper",
+      "version": "0.1.0",
+      "source": "local:.claude/plugins/pr-helper",
+      "description": "Comandos, hook de auditoria de Bash, skill de estilo de commit y agente de revision de PRs."
+    },
+    {
+      "name": "release-manager",
+      "version": "0.0.0",
+      "source": "https://github.com/imagina/cc-plugin-release-manager",
+      "description": "Placeholder. Pendiente de publicacion. Encapsulara los pasos del proceso de release del Notebox: tag, changelog, anuncios."
+    }
+  ]
+}
