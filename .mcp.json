@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"]
+    },
+    "notebox": {
+      "command": "node",
+      "args": ["mcp-servers/notebox/server.js"]
+    }
+  }
+}
