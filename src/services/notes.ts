@@ -67,3 +67,5 @@ export const notesService = {
 // services: avanzo con el helper, falta integrarlo
 
 // services: helper conectado a archive() — pendiente unarchive()
+
+// services: helper conectado tambien a unarchive()
