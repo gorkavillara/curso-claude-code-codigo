@@ -1,0 +1,35 @@
+# docker-compose.yml inicial del Notebox (Tema 23 - plantado).
+#
+# Estado mínimo: un único servicio `app` y un placeholder `db-dummy` comentado.
+# El Ejercicio 2 consiste en extender este compose con healthcheck real,
+# activar db-dummy, mover credenciales a env_file y configurar depends_on
+# condicional.
+#
+# CONTIENE UN FALLO INTENCIONAL para el Ejercicio 3: el servicio `app` declara
+# PORT=3001 en environment, pero src/server.ts lee SERVER_PORT. La app arranca
+# pero no en el puerto esperado. El Ejercicio 3 lo diagnostica.
+
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      # FALLO: la variable correcta es SERVER_PORT (ver src/server.ts).
+      # No tocar antes de hacer el Ejercicio 3.
+      PORT: 3001
+      NODE_ENV: development
+
+  # db-dummy:
+  #   image: postgres:16-alpine
+  #   env_file: .env
+  #   volumes:
+  #     - db-data:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+  #     interval: 5s
+  #     timeout: 3s
+  #     retries: 5
+
+# volumes:
+#   db-data:

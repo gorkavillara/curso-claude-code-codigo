@@ -1,54 +1,40 @@
-# Notebox — repo de prácticas del Tema 22 (CLI avanzada, sesiones y productividad)
+# Notebox — repo de prácticas del Tema 23 (Docker, entornos reproducibles y troubleshooting)
 
-> Rama `tema-22/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantiene el servidor MCP propio del Tema 20 (`mcp-servers/notebox/`) y el plugin local `pr-helper` del Tema 21 (`.claude/plugins/pr-helper/`). Para el Tema 22 se añaden fixtures de CLI avanzada: un comando slash del proyecto en `.claude/commands/`, un script `scripts/dev-server.sh` para demos de comandos en background, `notas-sesion.md` con tres tareas para sesión larga, y un directorio gemelo `notas-soporte/` para `--add-dir`. La carpeta `curso/` está ignorada.
+> Rama `tema-23/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, comandos slash + script de dev-server + `notas-soporte/` del Tema 22). Para el Tema 23 se añaden: un `Dockerfile` plantado con olores reales (sin slim, `COPY . .` antes de instalar deps, `npm install` en lugar de `npm ci`, sin usuario no-root, sin `.dockerignore`), un `docker-compose.yml` con un servicio `app` y un placeholder `db-dummy` comentado **y un mismatch intencional** entre `PORT` (compose) y `SERVER_PORT` (código), y un `.env.example` con las variables del entorno. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** kit completo para practicar la CLI: REPL vs `-p`, `/compact`, `/resume`, `/rewind`, comandos en background, `--add-dir`, `--append-system-prompt` y comandos slash del proyecto.
+API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit completo para practicar Docker: auditoría de Dockerfile, extensión de `docker-compose` multi-servicio y diagnóstico de fallos plantados.
 
-## Qué hay plantado para el Tema 22
+## Qué hay plantado para el Tema 23
 
 | Pieza | Ruta | Para qué |
 |---|---|---|
-| Comando slash del proyecto | `.claude/commands/repo-status.md` | Resume el estado del repo (package.json, scripts, .mcp.json, .claude/) |
-| Script de dev-server | `scripts/dev-server.sh` | Servidor de eco en puerto 3001 para demos de comandos en background |
-| Carpeta de logs | `logs/` (con `.gitkeep`) | Destino del `dev-server.log` |
-| Tareas para sesión larga | `notas-sesion.md` | Tres tareas pequeñas (validación, test, README) para practicar `/compact` y `/resume` |
-| Directorio gemelo | `notas-soporte/` | Material auxiliar (ADRs, runbook, convenciones) para practicar `/add-dir` |
-| `defaultMode` configurado | `.claude/settings.json` (campo `defaultMode`) | Configuración avanzada plantada |
-| Plugin del Tema 21 | `.claude/plugins/pr-helper/` | Sigue disponible (no se toca en este tema) |
-| MCP del Tema 20 | `mcp-servers/notebox/` + `.mcp.json` | Sigue disponible |
-| Subagentes del Tema 19 | `.claude/agents/` | Siguen disponibles |
+| Dockerfile con olores reales | `Dockerfile` | Auditarlo en el Ejercicio 1 (sin slim, `npm install`, `COPY . .` antes de install, sin USER) |
+| `.dockerignore` **ausente** | (no existe) | El Ejercicio 1 pide crearlo correctamente |
+| docker-compose con mismatch plantado | `docker-compose.yml` | Servicio `app` con `PORT=3001` en environment (cuando la app lee `SERVER_PORT`). Placeholder `db-dummy` comentado para el Ejercicio 2 |
+| Plantilla de variables de entorno | `.env.example` | Documenta `SERVER_PORT` y las variables de Postgres. Se copia a `.env` (no trackeado) en el Ejercicio 2 |
+| Endpoint `/health` | `src/server.ts` (ya existente) | Usado por el healthcheck del compose en el Ejercicio 2 |
+| Smoke test de fixtures Docker | `test/docker-fixtures.test.ts` | Valida que el Dockerfile, el compose y `.env.example` siguen con la forma esperada |
 
-> Convención: `notas-soporte/` está plantada **dentro** del repo para que un solo `git clone` deje todo listo. Conceptualmente sería un repositorio hermano. El alumno practica `/add-dir notas-soporte/` igualmente para verla aparecer en `/status` como directorio incluido explícitamente.
+## Fixtures heredados de temas anteriores (siguen disponibles)
 
-## Catálogo del comando slash `/repo-status`
-
-| Sección que devuelve | Lectura |
-|---|---|
-| Proyecto | `package.json` (name, version, description, main) |
-| Scripts disponibles | `package.json` (campo `scripts`) |
-| Dependencias clave | `package.json` (dependencies + devDependencies) |
-| MCP servers | `.mcp.json` |
-| Configuración Claude | `.claude/agents/`, `.claude/commands/`, `.claude/plugins/`, hooks de `settings.json` |
-| Estado general | "listo para trabajar" / "requiere setup" |
-
-## Script `scripts/dev-server.sh`
-
-Servidor HTTP minimalista de eco, autocontenido (usa Node, sin instalar nada extra). Características:
-
-- Escucha por defecto en el puerto 3001 (configurable con `DEV_SERVER_PORT`).
-- Responde con JSON conteniendo método, URL, headers, body y timestamp.
-- Escribe actividad a `logs/dev-server.log` (un append por petición).
-- Maneja `SIGTERM` y `SIGINT` para cerrar limpio.
-
-Diseñado para lanzarse en background desde una sesión de Claude Code. Demo del Tema 22.
-
-> **Requisito:** bash disponible (Git Bash en Windows o WSL). Si trabajas en PowerShell puro, ver `curso/tema-22-cli/notas.md` para alternativas.
+| Pieza | Ruta | Tema |
+|---|---|---|
+| Subagentes | `.claude/agents/` | Tema 19 |
+| Servidor MCP propio | `mcp-servers/notebox/` + `.mcp.json` | Tema 20 |
+| Plugin local `pr-helper` | `.claude/plugins/pr-helper/` | Tema 21 |
+| Comando slash del proyecto | `.claude/commands/repo-status.md` | Tema 22 |
+| Script de dev-server | `scripts/dev-server.sh` | Tema 22 |
+| Tareas de sesión larga | `notas-sesion.md` | Tema 22 |
+| Material auxiliar para `--add-dir` | `notas-soporte/` | Tema 22 |
 
 ## Estructura del proyecto
 
 ```
+Dockerfile                # PLANTADO con olores reales (Tema 23)
+docker-compose.yml        # PLANTADO con mismatch PORT/SERVER_PORT (Tema 23)
+.env.example              # Variables de entorno documentadas (Tema 23)
 src/
-  server.ts              # Entry point Express (HTTP API del Notebox)
+  server.ts               # Lee process.env.SERVER_PORT (convención del proyecto)
   routes/notes.ts
   services/notes.ts
   storage/memory.ts
@@ -57,73 +43,71 @@ src/
 test/
   notes.service.test.ts
   storage.test.ts
-  mcp-notebox.test.ts    # Smoke test del servidor MCP (Tema 20)
-  plugin-pr-helper.test.ts # Smoke test del plugin (Tema 21)
-  cli-fixtures.test.ts   # Smoke test de los fixtures del Tema 22
-mcp-servers/
-  notebox/               # Servidor MCP del Tema 20
+  mcp-notebox.test.ts
+  plugin-pr-helper.test.ts
+  cli-fixtures.test.ts
+  docker-fixtures.test.ts # Smoke test del fixture del Tema 23
+mcp-servers/notebox/      # Tema 20
 .mcp.json
 .claude/
-  agents/                # Subagentes del Tema 19
-  commands/
-    repo-status.md       # Comando slash del proyecto (Tema 22)
-  plugins/
-    pr-helper/           # Plugin del Tema 21
-  settings.json          # Permissions, defaultMode, hooks, enabledPlugins
-scripts/
-  dev-server.sh          # Servidor de eco para demos de background (Tema 22)
-logs/                    # Destino del dev-server.log (con .gitkeep)
-notas-sesion.md          # Tres tareas para practicar sesión larga (Tema 22)
-notas-soporte/           # Material auxiliar para /add-dir (Tema 22)
-  README.md
-  decisiones-arquitectura.md
-  runbook-incidencias.md
-  convenciones-equipo.md
+  agents/                 # Tema 19
+  commands/               # Tema 22
+  plugins/pr-helper/      # Tema 21
+  settings.json
+scripts/dev-server.sh     # Tema 22
+logs/                     # Tema 22 (con .gitkeep)
+notas-sesion.md           # Tema 22
+notas-soporte/            # Tema 22
 ```
 
 ## Arranque
 
 ```bash
 npm install
-npm test        # 5 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures)
+npm test        # 6 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures)
 ```
 
-## Cómo usar los fixtures
+## Cómo usar los fixtures del Tema 23
 
-### REPL vs `-p`
+### Sin Docker (entrega los `.md` igualmente)
+
+Los tres ejercicios se pueden completar leyendo y editando los archivos:
+
+- **Ejercicio 1:** lee `Dockerfile`, audita con Claude, aplica fixes, crea `.dockerignore`. Entrega `DOCKERFILE-AUDIT.md`.
+- **Ejercicio 2:** lee `docker-compose.yml`, extiende con healthcheck + db-dummy + env_file. Entrega `COMPOSE-NOTES.md`.
+- **Ejercicio 3:** lee `docker-compose.yml` y `src/server.ts`, identifica el mismatch, aplica el fix. Entrega `TROUBLESHOOTING.md`.
+
+### Con Docker disponible (verificación end-to-end)
+
+Verificación opcional pero recomendable:
 
 ```bash
-# Modo puntual (one-shot)
-claude -p "Lista los archivos de src/ y dime qué hace cada uno en una línea."
+# Ejercicio 1: comprobar que el Dockerfile inicial construye y mide tamaño
+docker build -t notebox:before .
+docker images notebox
+# Después de los fixes:
+docker build -t notebox:after .
+docker images notebox
 
-# REPL interactivo
-claude
-# dentro: /help, /status, /repo-status, /add-dir notas-soporte/, ...
+# Ejercicio 2: validar y levantar el compose extendido
+cp .env.example .env
+docker compose config
+docker compose up -d
+docker compose ps   # verificar healths
+
+# Ejercicio 3: reproducir el mismatch y verificar el fix
+docker compose up -d
+curl -i http://localhost:3001/health   # falla con el compose inicial
+docker compose logs app                # muestra "listening on :3000"
+# Aplicar el fix (PORT -> SERVER_PORT en compose) y recrear:
+docker compose up -d --force-recreate app
+curl -i http://localhost:3001/health   # ahora responde
 ```
 
-### Sesión larga con notas-sesion.md
+> **Importante:** los smoke tests de `test/docker-fixtures.test.ts` validan estructura, no comportamiento. Si Docker no está disponible, `npm test` sigue pasando — la lectura crítica y la decisión arquitectónica son lo que evaluamos.
 
-```bash
-claude
-# Pedir: "Lee notas-sesion.md y resuelve la tarea 1."
-# Pedir: "Ahora la tarea 2."
-# Pedir: "Ahora la tarea 3."
-# /status, /usage, /compact <instrucción de foco>, /rewind, /exit
-# Después: claude -r  (selector de sesiones)
-```
+## Sobre el mismatch `PORT` ↔ `SERVER_PORT`
 
-### Comando en background
+El `docker-compose.yml` plantado declara `PORT=3001` en el `environment:` del servicio `app`, pero `src/server.ts` lee `process.env.SERVER_PORT`. Al levantar, la app cae al default (`3000`) y `curl http://localhost:3001/health` falla. Es el escenario del Ejercicio 3.
 
-```bash
-claude --append-system-prompt "Responde en español, tono directo. Antes de cualquier edición lanza npm test."
-# dentro: "Lanza scripts/dev-server.sh en background y devuélveme el control."
-# después: "Lee logs/dev-server.log y resume actividad."
-```
-
-## Sobre `--append-system-prompt`
-
-Permite extender el system prompt oficial para una invocación concreta. Útil para reglas del día (idioma, tono, restricciones de alcance) que no merecen vivir en `CLAUDE.md`.
-
-## Sobre el directorio `notas-soporte/`
-
-Material auxiliar (ADRs, runbook, convenciones). En un entorno real viviría como repo hermano. Aquí está plantada como subcarpeta para que el curso funcione con un solo `git clone`. Practicar `/add-dir notas-soporte/` igualmente: el comando funciona y la carpeta aparece en `/status` como directorio incluido explícitamente.
+No arregles el mismatch en `tema-23/inicio`: cada `tema-23/ejercicio-0N` parte de este estado.

@@ -11,7 +11,9 @@ export function buildApp(): Express {
 
 const isMain = import.meta.url === `file://${process.argv[1]}`;
 if (isMain) {
-  const port = process.env.PORT ?? 3000;
+  // Convención del proyecto: la variable se llama SERVER_PORT, no PORT.
+  // Si docker-compose declara PORT, no se aplica y la app cae al default 3000.
+  const port = process.env.SERVER_PORT ?? 3000;
   buildApp().listen(port, () => {
     console.log(`notebox listening on :${port}`);
   });

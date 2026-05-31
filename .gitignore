@@ -18,3 +18,6 @@ Thumbs.db
 .claude/skills/
 
 curso/
+
+# Logs generados por dev-server.sh y test runs (Tema 22+).
+logs/*.log
