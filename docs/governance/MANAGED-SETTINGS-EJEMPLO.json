@@ -1,0 +1,23 @@
+{
+  "_comment": "Ejemplo de managed settings de la organización. En producción este fichero vive fuera del repo, gestionado por IT/plataforma vía MDM o equivalente (típicamente ~/.claude/managed-settings.json en cada máquina del dev). Se incluye aquí como referencia didáctica del Tema 26: qué tipo de reglas debería contener el nivel managed de una organización con varios repos.",
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./secrets/**)",
+      "Read(./**/credentials.json)",
+      "Bash(rm -rf *)",
+      "Bash(rm -rf /)",
+      "Bash(sudo *)",
+      "Bash(curl * | bash)",
+      "Bash(curl * | sh)"
+    ]
+  },
+  "model": "claude-opus-4-7",
+  "_notas_org": {
+    "modelo": "Modelo aprobado por la organización. Cualquier repo que quiera usar otro modelo necesita aprobación de plataforma.",
+    "deny": "Comandos y lecturas no negociables a nivel organización. Aplican a todos los repos, todos los equipos, todas las máquinas. Project settings no pueden re-permitir lo que managed deny.",
+    "telemetria": "Por política de la organización, los repos de producción reportan métricas anonimizadas de uso a la plataforma interna."
+  }
+}

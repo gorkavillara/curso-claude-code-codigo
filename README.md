@@ -1,29 +1,51 @@
-# Notebox — repo de prácticas del Tema 25 (Arquitectura, diseño de software y decisiones técnicas asistidas por IA)
+# Notebox — repo de prácticas del Tema 26 (Trabajo en equipo, estándares compartidos y gobierno de uso de Claude Code)
 
-> Rama `tema-25/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, comandos slash + script de dev-server del Tema 22, fixtures Docker del Tema 23, fixtures de CI/CD del Tema 24). Para el Tema 25 se añade `docs/architecture/` con los ADRs vigentes (ADR-001, ADR-002), dos decisiones pendientes plantadas (PENDING-001 sobre persistencia, PENDING-002 sobre validación), y `DEUDA-CONOCIDA.md` con el inventario de olores arquitectónicos y la próxima feature planificada. La carpeta `curso/` sigue ignorada.
+> Rama `tema-26/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, CLI avanzada del Tema 22, kit Docker del Tema 23, kit CI/CD del Tema 24, kit de arquitectura del Tema 25). Para el Tema 26 se añade `CLAUDE.md` en raíz con sección de equipo y gobierno, `docs/governance/` con política deliberadamente vaga + managed settings de ejemplo + rúbrica de review + plantilla DDR, y `.claude/auditoria/decisiones.md` con 3 entradas dimensionadas a propósito (granular, vaga, razonable). La carpeta `curso/` sigue ignorada.
 
-API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit Docker **más** kit CI/CD **más** kit completo para practicar decisiones arquitectónicas: exploración de alternativas, redacción de ADRs y auditoría de deuda.
+API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit Docker **más** kit CI/CD **más** kit de arquitectura **más** kit completo de gobernanza de equipo: política de uso, distribución de reglas entre managed/project/`CLAUDE.md`, rúbrica de review de PRs asistidos y mecanismo de trazabilidad de decisiones críticas.
 
-## Qué hay plantado para el Tema 25
+## Qué hay plantado para el Tema 26
+
+| Pieza | Ruta | Para qué |
+|---|---|---|
+| Convenciones de equipo | `CLAUDE.md` | Contrato de equipo + prompts modelo + reparto de responsabilidades |
+| Política de uso (vaga) | `docs/governance/POLITICA-CLAUDE-CODE.md` | Base del Ejercicio 1: auditar, detectar vaguedades + contradicciones + huecos, reescribir |
+| Managed settings de ejemplo | `docs/governance/MANAGED-SETTINGS-EJEMPLO.json` | Referencia para el Ejercicio 2: qué reglas viven en managed |
+| Rúbrica de review de PRs | `docs/governance/RUBRICA-REVIEW.md` | Criterios por blast radius (bajo / medio / alto) |
+| Plantilla DDR | `docs/governance/PLANTILLA-DDR.md` | Formato de Decisión Documentada Rápida |
+| Ejemplo DDR razonable | `docs/governance/decisiones/DDR-007-validacion-en-services.md` | Referencia de DDR bien dimensionada |
+| Índice de gobernanza | `docs/governance/README.md` | Mapa de los artefactos de gobierno |
+| Log de auditoría plantado | `.claude/auditoria/decisiones.md` | Base del Ejercicio 3: 3 entradas dimensionadas a propósito (granular / vaga / razonable) |
+| Settings con mezcla deliberada | `.claude/settings.json` | Base del Ejercicio 2: contiene `language` y `responseStyle` (convenciones mal ubicadas que el alumno debe mover a `CLAUDE.md`) |
+| Smoke test de fixtures | `test/governance-fixtures.test.ts` | Valida que los artefactos existen y mantienen la forma esperada |
+
+## Cómo usar los fixtures del Tema 26
+
+Los tres ejercicios son **conceptuales** — no se modifica código fuente, todos los entregables son `.md`:
+
+- **Ejercicio 1:** audita `docs/governance/POLITICA-CLAUDE-CODE.md` (deliberadamente vaga) cruzándola con `.claude/settings.json` y `CLAUDE.md`. Entrega `POLITICA-CLAUDE-CODE-V2.md` con vaguedades (cita textual + reformulación), contradicciones, huecos y política reescrita aplicando los 3 cambios más rentables.
+- **Ejercicio 2:** audita la distribución actual de reglas entre `.claude/settings.json`, `CLAUDE.md` y `MANAGED-SETTINGS-EJEMPLO.json`. Entrega `DISTRIBUCION-REGLAS.md` con tabla completa de redistribución (regla / sitio actual / sitio propuesto / motivo), reglas a subir a managed, reglas a bajar a `CLAUDE.md` y reglas mal expresadas.
+- **Ejercicio 3:** audita `.claude/auditoria/decisiones.md` con sus 3 entradas dimensionadas a propósito + `PLANTILLA-DDR.md`. Entrega `TRAZABILIDAD-DECISIONES.md` con diagnóstico (cita textual de cada entrada), lista de qué se audita y qué no (5+5 por blast radius), formato canónico final (máx 8 líneas), ciclo de mantenimiento (dueño + trigger) y 3 antipatrones con contramedida.
+
+## Coherencia con temas previos
+
+Este es el tema final del bloque de gobernanza (T19–T26) antes del proyecto final (T27). Todos los fixtures heredados siguen disponibles y operativos: subagentes (T19), MCP (T20), plugin local (T21), CLI avanzada (T22), Docker (T23), CI/CD (T24), arquitectura (T25). El Tema 26 añade **la capa que coordina todo eso entre personas** — política, reparto de responsabilidades, trazabilidad ligera y resiliencia ante rotación.
+
+`tema-26/inicio` **NO** incluye `POLITICA-CLAUDE-CODE-V2.md`, `DISTRIBUCION-REGLAS.md` ni `TRAZABILIDAD-DECISIONES.md`. Son los entregables esperados de los ejercicios.
+
+## Kit de arquitectura heredado del Tema 25 (sigue disponible)
 
 | Pieza | Ruta | Para qué |
 |---|---|---|
 | Índice de ADRs | `docs/architecture/README.md` | Listado de ADRs vigentes y decisiones pendientes |
-| ADR-001 (storage in-memory) | `docs/architecture/ADR-001-storage-en-memoria.md` | Modelo de formato + decisión vigente que el alumno respeta |
-| ADR-002 (Express) | `docs/architecture/ADR-002-express-framework.md` | Modelo de formato + decisión vigente que el alumno respeta |
-| PENDING-001 (persistencia) | `docs/architecture/PENDING-001-persistencia.md` | Decisión pendiente que el Ejercicio 1 explora con 3 alternativas |
-| PENDING-002 (validación) | `docs/architecture/PENDING-002-validacion-en-routes-o-services.md` | Decisión pendiente que el Ejercicio 2 cierra con ADR-003 |
-| DEUDA-CONOCIDA.md | `docs/architecture/DEUDA-CONOCIDA.md` | Inventario de olores + próxima feature (paginación), base del Ejercicio 3 |
-| Smoke test de fixtures | `test/architecture-fixtures.test.ts` | Valida que los documentos existen y mantienen la forma esperada |
+| ADR-001 (storage in-memory) | `docs/architecture/ADR-001-storage-en-memoria.md` | Modelo de formato |
+| ADR-002 (Express) | `docs/architecture/ADR-002-express-framework.md` | Modelo de formato |
+| PENDING-001 (persistencia) | `docs/architecture/PENDING-001-persistencia.md` | Decisión pendiente |
+| PENDING-002 (validación) | `docs/architecture/PENDING-002-validacion-en-routes-o-services.md` | Decisión pendiente (cerrada en DDR-007) |
+| DEUDA-CONOCIDA.md | `docs/architecture/DEUDA-CONOCIDA.md` | Inventario de olores + próxima feature |
+| Smoke test de arquitectura | `test/architecture-fixtures.test.ts` | Valida fixtures del Tema 25 |
 
-## Deuda arquitectónica real ya presente en `src/`
-
-| Olor | Archivo | Para qué sirve en el Ejercicio 3 |
-|---|---|---|
-| Anidamiento profundo (5 niveles) en `archive` / `unarchive` | `src/services/notes.ts` | Auditarlo y proponer plan de aplanado |
-| `services/` importa `storage/memory.ts` directamente | `src/services/notes.ts`, `src/search/index.ts` | Detectar el acoplamiento, proponer interfaz sin sobreingeniería |
-| Validación inconsistente entre rutas | `src/routes/notes.ts` | Conectar con el ADR-003 (PENDING-002) |
-| Búsqueda case-sensitive sin normalización | `src/search/index.ts` | Decidir si se asume como deuda consciente o se mitiga |
+Deuda arquitectónica real ya presente en `src/` (anidamiento, case-sensitive, validación inconsistente, acoplamiento de storage) sigue vigente — el Tema 26 no la toca.
 
 ## Fixtures heredados de temas anteriores (siguen disponibles)
 
@@ -47,14 +69,23 @@ API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **má
 ## Estructura del proyecto
 
 ```
+CLAUDE.md                     # Convenciones de equipo (Tema 26)
 docs/
-  architecture/
-    README.md                 # Índice de ADRs (Tema 25)
+  architecture/               # Tema 25
+    README.md
     ADR-001-storage-en-memoria.md
     ADR-002-express-framework.md
     PENDING-001-persistencia.md
     PENDING-002-validacion-en-routes-o-services.md
     DEUDA-CONOCIDA.md
+  governance/                 # Tema 26
+    README.md
+    POLITICA-CLAUDE-CODE.md   # Deliberadamente vaga (E1)
+    MANAGED-SETTINGS-EJEMPLO.json
+    RUBRICA-REVIEW.md
+    PLANTILLA-DDR.md
+    decisiones/
+      DDR-007-validacion-en-services.md
 .github/workflows/            # Tema 24
 scripts/                      # Temas 22 y 24
 logs/                         # Tema 24
@@ -75,12 +106,15 @@ test/
   docker-fixtures.test.ts
   ci-fixtures.test.ts
   architecture-fixtures.test.ts  # Tema 25
+  governance-fixtures.test.ts    # Tema 26
 mcp-servers/notebox/          # Tema 20
 .mcp.json
 .claude/
   agents/                     # Tema 19
   commands/                   # Tema 22
   plugins/pr-helper/          # Tema 21
+  auditoria/                  # Tema 26
+    decisiones.md
   settings.json
 notas-sesion.md               # Tema 22
 notas-soporte/                # Tema 22
@@ -90,16 +124,8 @@ notas-soporte/                # Tema 22
 
 ```bash
 npm install
-npm test        # 8 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures, ci-fixtures, architecture-fixtures)
+npm test        # 9 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures, ci-fixtures, architecture-fixtures, governance-fixtures)
 ```
-
-## Cómo usar los fixtures del Tema 25
-
-Los tres ejercicios son **conceptuales** — no se modifica código fuente, todos los entregables son `.md`:
-
-- **Ejercicio 1:** lee `docs/architecture/PENDING-001-persistencia.md` y `src/storage/memory.ts`, explora 3 alternativas con Claude, evalúa trade-offs en los ejes acordados. Entrega `OPCIONES-PERSISTENCIA.md` con tabla, recomendación razonada (con lo que se pierde), alternativa descartada y "qué información me falta para decidir".
-- **Ejercicio 2:** lee `PENDING-002-validacion-en-routes-o-services.md`, decide entre las dos opciones planteadas, genera `docs/architecture/ADR-003-validacion-de-input.md` siguiendo el formato exacto de ADR-001 y ADR-002. Actualiza `docs/architecture/README.md` añadiendo la nueva entrada.
-- **Ejercicio 3:** lee `DEUDA-CONOCIDA.md` y audita el repo, conecta los olores con la próxima feature (paginación), propón plan incremental. Entrega `DEUDA-ARQUITECTONICA.md` con tabla priorizada, plan paso a paso y sección "qué dejo sin tocar y por qué".
 
 ## Sobre el ADR-003 y los ejercicios
 

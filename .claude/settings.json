@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment_tema_26": "Settings versionados del repo. Mezcla deliberada de reglas tecnicas (allow/deny, hooks) y entradas que en realidad son convenciones humanas (language, responseStyle) - el Ejercicio 2 del Tema 26 consiste en redistribuirlas entre managed, project y CLAUDE.md.",
   "permissions": {
     "allow": [
       "Bash(npm install)",
@@ -30,6 +31,8 @@
     ]
   },
   "defaultMode": "acceptEdits",
+  "language": "es",
+  "responseStyle": "concise",
   "enabledPlugins": [
     "pr-helper"
   ],
