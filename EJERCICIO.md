@@ -5,22 +5,18 @@
 
 ## Objetivo
 
-Generar un script Node de un solo archivo que reemplace `app.del(` por `app.delete(` en `src/`, **idempotente** (ejecutarlo dos veces no rompe), usando solo stdlib. Lanzarlo, revisar el diff y verificar que la suite sigue verde.
+Generar un script Node de un solo archivo que reemplace `.del(` por `.delete(` en los routers de `src/`, **idempotente** (ejecutarlo dos veces no rompe), usando solo stdlib. Lanzarlo, revisar el diff y verificar que la suite sigue verde.
 
 ---
 
 ## Contexto
 
-Express 5 elimina `app.del()`. Si el repo usa el patrón en varios archivos, hacerlo a mano es lento y propenso a olvidos. **Cambios mecánicos = codemod.** **Decisiones de diseño = humano.** No mezcles.
+Express 5 elimina `app.del()` (y `router.del()`). Si el repo usa el patrón en varios archivos, hacerlo a mano es lento y propenso a olvidos. **Cambios mecánicos = codemod.** **Decisiones de diseño = humano.** No mezcles.
 
-Si en tu copia del repo no hay ocurrencias de `app.del(`, **planta una temporalmente** en `src/routes/notes.ts` para tener algo que migrar:
+Esta rama tiene **plantadas 3 ocurrencias reales** del patrón a migrar (puedes verificarlas con `git grep -n "\.del(" src/`):
 
-```ts
-// Línea temporal para el ejercicio:
-app.del('/notes/:id', (req, res) => { /* ... */ });
-```
-
-(En un repo real, no añades código defectuoso para luego corregirlo. Aquí es práctica controlada.)
+- `app.del('/legacy/cache', ...)` en `src/server.ts`.
+- `notesRouter.del('/:id', ...)` y `notesRouter.del('/', ...)` en `src/routes/notes.ts`.
 
 > "Para cambios pequeños, regex con contexto basta. Para cambios grandes (millones de líneas), AST. No matéis moscas con bazucas."
 
@@ -30,14 +26,17 @@ app.del('/notes/:id', (req, res) => { /* ... */ });
 
 ```
 [CONTEXTO]
-Hay que reemplazar todas las ocurrencias de `app.del(` por
-`app.delete(` en src/. La firma y el comportamiento son idénticos.
+Hay que reemplazar todas las ocurrencias de `<identifier>.del(` por
+`<identifier>.delete(` en src/. Cubre tanto `app.del(` (Express app)
+como `<router>.del(` (instancias de Router). Firma y comportamiento
+idénticos en Express 5.
 
 [OBJETIVO]
-Genera un script Node (ESM) de un solo archivo `scripts/migrate-app-del.mjs` que:
+Genera un script Node (ESM) de un solo archivo `scripts/migrate-del.mjs` que:
 1. Recorra src/ recursivamente.
-2. Reemplace `app.del(` por `app.delete(` solo cuando esté precedido por
-   `app.` (no como substring de otra cosa). Usa word boundary o contexto.
+2. Reemplace `<id>.del(` por `<id>.delete(` (regex con contexto: un
+   identificador, un punto, `del`, paréntesis abierto). Evita coincidencias
+   parciales tipo `selfdel(` con word boundary.
 3. Registre los archivos modificados (console.log de cada uno).
 
 [RESTRICCIONES]
@@ -62,10 +61,10 @@ Lee el script generado y comprueba:
 
 ```bash
 # Primera pasada — debe modificar archivos
-node scripts/migrate-app-del.mjs
+node scripts/migrate-del.mjs
 
 # Segunda pasada — NO debe modificar nada
-node scripts/migrate-app-del.mjs
+node scripts/migrate-del.mjs
 
 # git diff debe estar limpio tras la segunda pasada
 git diff
@@ -86,8 +85,8 @@ npm test
 git diff src/
 
 # Si todo está OK, commit
-git add src/ scripts/migrate-app-del.mjs
-git commit -m "refactor(routes): replace app.del with app.delete via codemod"
+git add src/ scripts/migrate-del.mjs
+git commit -m "refactor(routes): replace .del with .delete via codemod"
 ```
 
 > Si encuentras un falso positivo (algo que el script ha cambiado y no debía), reverte y endurece el patrón. NO firmes cambios sin revisar.
@@ -98,7 +97,7 @@ git commit -m "refactor(routes): replace app.del with app.delete via codemod"
 
 ### Script
 
-Ruta: `scripts/migrate-app-del.mjs`
+Ruta: `scripts/migrate-del.mjs`
 Idempotente: ✅ / ❌
 Solo stdlib: ✅ / ❌
 
