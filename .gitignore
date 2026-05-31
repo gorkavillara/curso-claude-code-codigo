@@ -21,3 +21,5 @@ curso/
 
 # Logs generados por dev-server.sh y test runs (Tema 22+).
 logs/*.log
+# Excepción: log de pipeline plantado para el Ejercicio 3 del Tema 24.
+!logs/pipeline-fail.log

@@ -1,19 +1,18 @@
-# Notebox — repo de prácticas del Tema 23 (Docker, entornos reproducibles y troubleshooting)
+# Notebox — repo de prácticas del Tema 24 (DevOps, CI/CD, pipelines y automatización)
 
-> Rama `tema-23/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, comandos slash + script de dev-server + `notas-soporte/` del Tema 22). Para el Tema 23 se añaden: un `Dockerfile` plantado con olores reales (sin slim, `COPY . .` antes de instalar deps, `npm install` en lugar de `npm ci`, sin usuario no-root, sin `.dockerignore`), un `docker-compose.yml` con un servicio `app` y un placeholder `db-dummy` comentado **y un mismatch intencional** entre `PORT` (compose) y `SERVER_PORT` (código), y un `.env.example` con las variables del entorno. La carpeta `curso/` está ignorada.
+> Rama `tema-24/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, comandos slash + script de dev-server + `notas-soporte/` del Tema 22, fixtures Docker del Tema 23). Para el Tema 24 se añaden: un `.github/workflows/ci.yml` plantado con olores reales (actions sin pin a SHA, sin cache, sin `permissions`, sin `concurrency`, jobs fusionados), un `.github/workflows/release.yml` mínimo como contexto adicional, un `scripts/release.sh` plantado sin validaciones (`set -e` solo, sin working-tree-check, push automático), y un `logs/pipeline-fail.log` con un fallo real de `npm ci` por lockfile desactualizado. La carpeta `curso/` está ignorada.
 
-API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit completo para practicar Docker: auditoría de Dockerfile, extensión de `docker-compose` multi-servicio y diagnóstico de fallos plantados.
+API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit Docker **más** kit completo para practicar CI/CD: auditoría de workflow, endurecimiento de scripts de release y triage de logs de pipeline.
 
-## Qué hay plantado para el Tema 23
+## Qué hay plantado para el Tema 24
 
 | Pieza | Ruta | Para qué |
 |---|---|---|
-| Dockerfile con olores reales | `Dockerfile` | Auditarlo en el Ejercicio 1 (sin slim, `npm install`, `COPY . .` antes de install, sin USER) |
-| `.dockerignore` **ausente** | (no existe) | El Ejercicio 1 pide crearlo correctamente |
-| docker-compose con mismatch plantado | `docker-compose.yml` | Servicio `app` con `PORT=3001` en environment (cuando la app lee `SERVER_PORT`). Placeholder `db-dummy` comentado para el Ejercicio 2 |
-| Plantilla de variables de entorno | `.env.example` | Documenta `SERVER_PORT` y las variables de Postgres. Se copia a `.env` (no trackeado) en el Ejercicio 2 |
-| Endpoint `/health` | `src/server.ts` (ya existente) | Usado por el healthcheck del compose en el Ejercicio 2 |
-| Smoke test de fixtures Docker | `test/docker-fixtures.test.ts` | Valida que el Dockerfile, el compose y `.env.example` siguen con la forma esperada |
+| Workflow de CI con olores reales | `.github/workflows/ci.yml` | Auditarlo en el Ejercicio 1 (actions sin SHA pin, sin cache, sin `permissions`, sin `concurrency`, job único `ci` con `lint + typecheck + test`) |
+| Workflow de release mínimo | `.github/workflows/release.yml` | Contexto adicional. El alumno avanzado lo menciona en `CI-AUDIT.md` |
+| Script de release sin validaciones | `scripts/release.sh` | Endurecerlo en el Ejercicio 2 (`set -e` solo, sin working-tree-check, push automático) |
+| Log de pipeline con fallo real | `logs/pipeline-fail.log` | Triage en el Ejercicio 3 (`npm ci` falla por lockfile desactualizado — `Missing: vitest@1.6.0`) |
+| Smoke test de fixtures CI/CD | `test/ci-fixtures.test.ts` | Valida que el workflow, el release.sh y el log siguen con la forma esperada |
 
 ## Fixtures heredados de temas anteriores (siguen disponibles)
 
@@ -26,15 +25,27 @@ API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **má
 | Script de dev-server | `scripts/dev-server.sh` | Tema 22 |
 | Tareas de sesión larga | `notas-sesion.md` | Tema 22 |
 | Material auxiliar para `--add-dir` | `notas-soporte/` | Tema 22 |
+| Dockerfile con olores plantados | `Dockerfile` | Tema 23 |
+| docker-compose con mismatch | `docker-compose.yml` | Tema 23 |
+| `.env.example` | `.env.example` | Tema 23 |
 
 ## Estructura del proyecto
 
 ```
-Dockerfile                # PLANTADO con olores reales (Tema 23)
-docker-compose.yml        # PLANTADO con mismatch PORT/SERVER_PORT (Tema 23)
-.env.example              # Variables de entorno documentadas (Tema 23)
+.github/
+  workflows/
+    ci.yml                  # PLANTADO con olores reales (Tema 24)
+    release.yml             # Contexto adicional (Tema 24)
+scripts/
+  release.sh                # PLANTADO sin validaciones (Tema 24)
+  dev-server.sh             # Tema 22
+logs/
+  pipeline-fail.log         # PLANTADO con fallo real de npm ci (Tema 24)
+Dockerfile                  # Tema 23
+docker-compose.yml          # Tema 23
+.env.example                # Tema 23
 src/
-  server.ts               # Lee process.env.SERVER_PORT (convención del proyecto)
+  server.ts
   routes/notes.ts
   services/notes.ts
   storage/memory.ts
@@ -46,68 +57,57 @@ test/
   mcp-notebox.test.ts
   plugin-pr-helper.test.ts
   cli-fixtures.test.ts
-  docker-fixtures.test.ts # Smoke test del fixture del Tema 23
-mcp-servers/notebox/      # Tema 20
+  docker-fixtures.test.ts   # Tema 23
+  ci-fixtures.test.ts       # Tema 24 (smoke test de los fixtures de CI/CD)
+mcp-servers/notebox/        # Tema 20
 .mcp.json
 .claude/
-  agents/                 # Tema 19
-  commands/               # Tema 22
-  plugins/pr-helper/      # Tema 21
+  agents/                   # Tema 19
+  commands/                 # Tema 22
+  plugins/pr-helper/        # Tema 21
   settings.json
-scripts/dev-server.sh     # Tema 22
-logs/                     # Tema 22 (con .gitkeep)
-notas-sesion.md           # Tema 22
-notas-soporte/            # Tema 22
+notas-sesion.md             # Tema 22
+notas-soporte/              # Tema 22
 ```
 
 ## Arranque
 
 ```bash
 npm install
-npm test        # 6 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures)
+npm test        # 7 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures, ci-fixtures)
 ```
 
-## Cómo usar los fixtures del Tema 23
+## Cómo usar los fixtures del Tema 24
 
-### Sin Docker (entrega los `.md` igualmente)
+### Sin runner (entrega los `.md` igualmente)
 
-Los tres ejercicios se pueden completar leyendo y editando los archivos:
+Los tres ejercicios se pueden completar leyendo y editando los archivos. **No se ejecuta el pipeline real**:
 
-- **Ejercicio 1:** lee `Dockerfile`, audita con Claude, aplica fixes, crea `.dockerignore`. Entrega `DOCKERFILE-AUDIT.md`.
-- **Ejercicio 2:** lee `docker-compose.yml`, extiende con healthcheck + db-dummy + env_file. Entrega `COMPOSE-NOTES.md`.
-- **Ejercicio 3:** lee `docker-compose.yml` y `src/server.ts`, identifica el mismatch, aplica el fix. Entrega `TROUBLESHOOTING.md`.
+- **Ejercicio 1:** lee `.github/workflows/ci.yml`, audita con Claude, aplica fixes (jobs separados, `permissions:`, `concurrency:`, pin a SHA). Entrega `CI-AUDIT.md`.
+- **Ejercicio 2:** endurece `scripts/release.sh` con `set -euo pipefail` + 4 validaciones previas. Diseña `scripts/rollback.sh` desde cero. Entrega `RELEASE-NOTES.md`.
+- **Ejercicio 3:** lee `logs/pipeline-fail.log`, localiza el bloque del error real, formula 3 hipótesis, verifica contra `.github/workflows/ci.yml` y `package.json`/`package-lock.json`, decide el fix. Entrega `PIPELINE-TRIAGE.md`.
 
-### Con Docker disponible (verificación end-to-end)
+### Con fork propio + GitHub Actions (verificación opcional)
 
-Verificación opcional pero recomendable:
+Si tienes un fork del repo con Actions activado:
 
 ```bash
-# Ejercicio 1: comprobar que el Dockerfile inicial construye y mide tamaño
-docker build -t notebox:before .
-docker images notebox
-# Después de los fixes:
-docker build -t notebox:after .
-docker images notebox
-
-# Ejercicio 2: validar y levantar el compose extendido
-cp .env.example .env
-docker compose config
-docker compose up -d
-docker compose ps   # verificar healths
-
-# Ejercicio 3: reproducir el mismatch y verificar el fix
-docker compose up -d
-curl -i http://localhost:3001/health   # falla con el compose inicial
-docker compose logs app                # muestra "listening on :3000"
-# Aplicar el fix (PORT -> SERVER_PORT en compose) y recrear:
-docker compose up -d --force-recreate app
-curl -i http://localhost:3001/health   # ahora responde
+# Tras endurecer el workflow del Ejercicio 1:
+git push origin tema-24/ejercicio-01:tu-fork-branch
+# Abre el fork en GitHub, ve a Actions, observa el run.
+# Primer run con cache vacío tarda más; el segundo se beneficia del cache: npm.
 ```
 
-> **Importante:** los smoke tests de `test/docker-fixtures.test.ts` validan estructura, no comportamiento. Si Docker no está disponible, `npm test` sigue pasando — la lectura crítica y la decisión arquitectónica son lo que evaluamos.
+> **Importante:** los smoke tests de `test/ci-fixtures.test.ts` validan estructura, no comportamiento. Si no tienes acceso a runner, `npm test` sigue pasando — la auditoría, el endurecimiento del script y el triage del log son lo que se evalúa.
 
-## Sobre el mismatch `PORT` ↔ `SERVER_PORT`
+## Sobre el `rollback.sh`
 
-El `docker-compose.yml` plantado declara `PORT=3001` en el `environment:` del servicio `app`, pero `src/server.ts` lee `process.env.SERVER_PORT`. Al levantar, la app cae al default (`3000`) y `curl http://localhost:3001/health` falla. Es el escenario del Ejercicio 3.
+`tema-24/inicio` **NO** incluye `scripts/rollback.sh`. El Ejercicio 2 pide al alumno diseñarlo desde cero usando Claude como pair — patrón mínimo: confirmación interactiva, verificación de tag existente, comando de re-deploy (placeholder), smoke test post-rollback. Está documentado así en el `EJERCICIO.md` de la rama `tema-24/ejercicio-02`.
 
-No arregles el mismatch en `tema-23/inicio`: cada `tema-23/ejercicio-0N` parte de este estado.
+## Sobre el log de pipeline plantado
+
+`logs/pipeline-fail.log` contiene un fallo real de `npm ci`: el PR añadió `vitest` a `package.json` sin regenerar el `package-lock.json`. Las primeras ~70 líneas son ruido del runner (setup, checkout, setup-node); el error vive en un bloque de 20 líneas hacia el final. El Ejercicio 3 entrena el reflejo de **filtrar antes de pegar al agente**.
+
+> El `logs/pipeline-fail.log` está exceptuado del `.gitignore` (las demás `logs/*.log` siguen ignoradas). Es un fixture, no un log generado en runtime.
+
+No arregles los olores en `tema-24/inicio`: cada `tema-24/ejercicio-0N` parte de este estado.

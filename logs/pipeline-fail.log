@@ -1,0 +1,154 @@
+2024-01-15T10:23:30.0000001Z Current runner version: '2.311.0'
+2024-01-15T10:23:30.0000002Z ##[group]Operating System
+2024-01-15T10:23:30.0000003Z Ubuntu
+2024-01-15T10:23:30.0000004Z 22.04.3
+2024-01-15T10:23:30.0000005Z LTS
+2024-01-15T10:23:30.0000006Z ##[endgroup]
+2024-01-15T10:23:30.0000007Z ##[group]Runner Image
+2024-01-15T10:23:30.0000008Z Image: ubuntu-22.04
+2024-01-15T10:23:30.0000009Z Version: 20240108.1.0
+2024-01-15T10:23:30.0000010Z Included Software: https://github.com/actions/runner-images/blob/ubuntu22/20240108.1/images/ubuntu/Ubuntu2204-Readme.md
+2024-01-15T10:23:30.0000011Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu22%2F20240108.1
+2024-01-15T10:23:30.0000012Z ##[endgroup]
+2024-01-15T10:23:30.0000013Z ##[group]Runner Image Provisioner
+2024-01-15T10:23:30.0000014Z 2.0.290.1
+2024-01-15T10:23:30.0000015Z ##[endgroup]
+2024-01-15T10:23:30.0000016Z ##[group]GITHUB_TOKEN Permissions
+2024-01-15T10:23:30.0000017Z Actions: write
+2024-01-15T10:23:30.0000018Z Checks: write
+2024-01-15T10:23:30.0000019Z Contents: write
+2024-01-15T10:23:30.0000020Z Deployments: write
+2024-01-15T10:23:30.0000021Z Discussions: write
+2024-01-15T10:23:30.0000022Z Issues: write
+2024-01-15T10:23:30.0000023Z Metadata: read
+2024-01-15T10:23:30.0000024Z Packages: write
+2024-01-15T10:23:30.0000025Z Pages: write
+2024-01-15T10:23:30.0000026Z PullRequests: write
+2024-01-15T10:23:30.0000027Z RepositoryProjects: write
+2024-01-15T10:23:30.0000028Z SecurityEvents: write
+2024-01-15T10:23:30.0000029Z Statuses: write
+2024-01-15T10:23:30.0000030Z ##[endgroup]
+2024-01-15T10:23:30.1000000Z Secret source: Actions
+2024-01-15T10:23:30.1000001Z Prepare workflow directory
+2024-01-15T10:23:30.2000000Z Prepare all required actions
+2024-01-15T10:23:30.3000000Z Getting action download info
+2024-01-15T10:23:30.5000000Z Download action repository 'actions/checkout@v3' (SHA:f43a0e5ff2bd294095638e18286ca9a3d1956744)
+2024-01-15T10:23:30.9000000Z Download action repository 'actions/setup-node@v3' (SHA:1a4442cacd436585916779262731d5b162bc6ec7)
+2024-01-15T10:23:31.0000000Z Complete job name: ci
+2024-01-15T10:23:31.1000000Z ##[group]Run actions/checkout@v3
+2024-01-15T10:23:31.1000001Z with:
+2024-01-15T10:23:31.1000002Z   repository: gorkavillara/notebox
+2024-01-15T10:23:31.1000003Z   token: ***
+2024-01-15T10:23:31.1000004Z   ssh-strict: true
+2024-01-15T10:23:31.1000005Z   persist-credentials: true
+2024-01-15T10:23:31.1000006Z   clean: true
+2024-01-15T10:23:31.1000007Z   sparse-checkout-cone-mode: true
+2024-01-15T10:23:31.1000008Z   fetch-depth: 1
+2024-01-15T10:23:31.1000009Z   fetch-tags: false
+2024-01-15T10:23:31.1000010Z   show-progress: true
+2024-01-15T10:23:31.1000011Z   lfs: false
+2024-01-15T10:23:31.1000012Z   submodules: false
+2024-01-15T10:23:31.1000013Z   set-safe-directory: true
+2024-01-15T10:23:31.1000014Z ##[endgroup]
+2024-01-15T10:23:31.2000000Z Syncing repository: gorkavillara/notebox
+2024-01-15T10:23:31.2500000Z ##[group]Getting Git version info
+2024-01-15T10:23:31.2500001Z Working directory is '/home/runner/work/notebox/notebox'
+2024-01-15T10:23:31.3000000Z [command]/usr/bin/git version
+2024-01-15T10:23:31.3500000Z git version 2.43.0
+2024-01-15T10:23:31.3500001Z ##[endgroup]
+2024-01-15T10:23:31.4000000Z Temporarily overriding HOME='/home/runner/work/_temp/abc' before making global git config changes
+2024-01-15T10:23:31.4500000Z Adding repository directory to the temporary git global config as a safe directory
+2024-01-15T10:23:31.5000000Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/notebox/notebox
+2024-01-15T10:23:31.5500000Z Deleting the contents of '/home/runner/work/notebox/notebox'
+2024-01-15T10:23:31.6000000Z ##[group]Initializing the repository
+2024-01-15T10:23:31.6000001Z [command]/usr/bin/git init /home/runner/work/notebox/notebox
+2024-01-15T10:23:31.7000000Z hint: Using 'master' as the name for the initial branch.
+2024-01-15T10:23:31.7500000Z Initialized empty Git repository in /home/runner/work/notebox/notebox/.git/
+2024-01-15T10:23:31.8000000Z [command]/usr/bin/git remote add origin https://github.com/gorkavillara/notebox
+2024-01-15T10:23:31.8500000Z ##[endgroup]
+2024-01-15T10:23:31.9000000Z ##[group]Disabling automatic garbage collection
+2024-01-15T10:23:31.9500000Z [command]/usr/bin/git config --local gc.auto 0
+2024-01-15T10:23:31.9999999Z ##[endgroup]
+2024-01-15T10:23:32.0500000Z ##[group]Setting up auth
+2024-01-15T10:23:32.1000000Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2024-01-15T10:23:32.1500000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2024-01-15T10:23:32.2000000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2024-01-15T10:23:32.2500000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2024-01-15T10:23:32.3000000Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2024-01-15T10:23:32.3500000Z ##[endgroup]
+2024-01-15T10:23:32.4000000Z ##[group]Fetching the repository
+2024-01-15T10:23:32.4500000Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +abc123def456ghi789jkl012mno345pqr678stu9:refs/remotes/pull/127/merge
+2024-01-15T10:23:33.0000000Z From https://github.com/gorkavillara/notebox
+2024-01-15T10:23:33.0500000Z  * [new ref]         abc123def456ghi789jkl012mno345pqr678stu9 -> pull/127/merge
+2024-01-15T10:23:33.1000000Z ##[endgroup]
+2024-01-15T10:23:33.1500000Z ##[group]Determining the checkout info
+2024-01-15T10:23:33.2000000Z ##[endgroup]
+2024-01-15T10:23:33.2500000Z ##[group]Checking out the ref
+2024-01-15T10:23:33.3000000Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/127/merge
+2024-01-15T10:23:33.4000000Z Note: switching to 'refs/remotes/pull/127/merge'.
+2024-01-15T10:23:33.4500000Z You are in 'detached HEAD' state.
+2024-01-15T10:23:33.5000000Z HEAD is now at abc123d Merge pull/127/head into pull/127/base
+2024-01-15T10:23:33.5500000Z ##[endgroup]
+2024-01-15T10:23:33.6000000Z [command]/usr/bin/git log -1 --format='%H'
+2024-01-15T10:23:33.6500000Z 'abc123def456ghi789jkl012mno345pqr678stu9'
+2024-01-15T10:23:33.7000000Z ##[group]Run actions/setup-node@v3
+2024-01-15T10:23:33.7000001Z with:
+2024-01-15T10:23:33.7000002Z   node-version: 24
+2024-01-15T10:23:33.7000003Z   always-auth: false
+2024-01-15T10:23:33.7000004Z   check-latest: false
+2024-01-15T10:23:33.7000005Z   token: ***
+2024-01-15T10:23:33.7000006Z ##[endgroup]
+2024-01-15T10:23:33.8000000Z Found in cache @ /opt/hostedtoolcache/node/24.0.0/x64
+2024-01-15T10:23:34.0000000Z Environment details
+2024-01-15T10:23:34.0500000Z node: v24.0.0
+2024-01-15T10:23:34.1000000Z npm: 10.5.0
+2024-01-15T10:23:34.1500000Z yarn: 1.22.21
+2024-01-15T10:23:45.1234567Z ##[group]Run npm ci
+2024-01-15T10:23:45.1234568Z npm ci
+2024-01-15T10:23:45.1234569Z shell: /usr/bin/bash -e {0}
+2024-01-15T10:23:45.1234570Z ##[endgroup]
+2024-01-15T10:23:45.2345678Z npm ERR! code EUSAGE
+2024-01-15T10:23:45.2456789Z npm ERR!
+2024-01-15T10:23:45.2567890Z npm ERR! `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2024-01-15T10:23:45.2678901Z npm ERR!
+2024-01-15T10:23:45.2789012Z npm ERR! Missing: vitest@1.6.0 from lock file
+2024-01-15T10:23:45.2890123Z npm ERR! Missing: @vitest/expect@1.6.0 from lock file
+2024-01-15T10:23:45.2901234Z npm ERR! Missing: @vitest/runner@1.6.0 from lock file
+2024-01-15T10:23:45.2912345Z npm ERR! Missing: @vitest/snapshot@1.6.0 from lock file
+2024-01-15T10:23:45.2923456Z npm ERR! Missing: @vitest/utils@1.6.0 from lock file
+2024-01-15T10:23:45.2934567Z npm ERR!
+2024-01-15T10:23:45.3001234Z npm ERR! Clean install a project
+2024-01-15T10:23:45.3012345Z npm ERR!
+2024-01-15T10:23:45.3023456Z npm ERR! Usage:
+2024-01-15T10:23:45.3034567Z npm ERR! npm ci
+2024-01-15T10:23:45.3045678Z npm ERR!
+2024-01-15T10:23:45.3056789Z npm ERR! Options:
+2024-01-15T10:23:45.3067890Z npm ERR! [--install-strategy=hoisted|nested|shallow|linked] [--legacy-bundling]
+2024-01-15T10:23:45.3078901Z npm ERR! [--global-style] [--omit=<dev|optional|peer> [--omit=<dev|optional|peer> ...]]
+2024-01-15T10:23:45.3089012Z npm ERR! [--include=<prod|dev|optional|peer> [--include=<prod|dev|optional|peer> ...]]
+2024-01-15T10:23:45.3100123Z npm ERR! [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2024-01-15T10:23:45.3111234Z npm ERR! [--no-bin-links] [--no-fund] [--dry-run]
+2024-01-15T10:23:45.3112345Z npm ERR! [-w|--workspace <workspace-spec> [-w|--workspace <workspace-spec> ...]]
+2024-01-15T10:23:45.3123456Z npm ERR! [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2024-01-15T10:23:45.3134567Z npm ERR!
+2024-01-15T10:23:45.3145678Z npm ERR! aliases: clean-install, ic, install-clean, isntall-clean
+2024-01-15T10:23:45.3156789Z npm ERR!
+2024-01-15T10:23:45.3167890Z npm ERR! Run "npm help ci" for more info
+2024-01-15T10:23:45.3178901Z
+2024-01-15T10:23:45.3334567Z npm ERR! A complete log of this run can be found in: /home/runner/.npm/_logs/2024-01-15T10_23_45_000Z-debug-0.log
+2024-01-15T10:23:46.0000000Z ##[error]Process completed with exit code 1.
+2024-01-15T10:23:46.5000000Z Post job cleanup.
+2024-01-15T10:23:46.6000000Z [command]/usr/bin/git version
+2024-01-15T10:23:46.6500000Z git version 2.43.0
+2024-01-15T10:23:46.7000000Z Temporarily overriding HOME='/home/runner/work/_temp/abc' before making global git config changes
+2024-01-15T10:23:46.7500000Z Adding repository directory to the temporary git global config as a safe directory
+2024-01-15T10:23:46.8000000Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/notebox/notebox
+2024-01-15T10:23:46.8500000Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2024-01-15T10:23:46.9000000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2024-01-15T10:23:46.9500000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2024-01-15T10:23:47.0000000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2024-01-15T10:23:47.0500000Z http.https://github.com/.extraheader
+2024-01-15T10:23:47.1000000Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2024-01-15T10:23:47.1500000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'url\.https\:\/\/github\.com\/\.insteadOf' && git config --local --unset-all 'url.https://github.com/.insteadOf' || :"
+2024-01-15T10:23:47.2000000Z Cleaning up orphan processes
+2024-01-15T10:23:47.2500000Z ##[error]Process completed with exit code 1.
