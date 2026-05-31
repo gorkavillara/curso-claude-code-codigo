@@ -32,3 +32,5 @@ notesRouter.post('/:id/unarchive', (req: Request, res: Response) => {
   if (!result) return res.status(404).json({ error: 'not found' });
   res.json(result);
 });
+
+// routes: pendiente endpoint bulk para archivar varias notas
