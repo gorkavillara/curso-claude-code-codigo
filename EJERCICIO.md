@@ -11,22 +11,12 @@ Detectar al menos **3 exposiciones de información sensible** en el repo y aplic
 
 ## Contexto: el repo tiene secretos plantados
 
-Para este ejercicio, el repo tiene (o se simulan) los siguientes problemas:
+Esta rama tiene **plantados** los siguientes problemas reales (los podéis verificar antes de empezar):
 
-- Un archivo `.env` versionado con una clave de demo (`API_KEY=demo-secret-12345` o similar).
-- Un `console.log("Request body:", req.body)` en `src/routes/notes.ts` que imprime el body completo en cada petición.
-- (Posiblemente) un error handler que devuelve `err.stack` al cliente.
+- Un archivo `.env` versionado con `API_KEY=demo-secret-12345` (`git ls-tree HEAD .env`).
+- Un `console.log("[POST /notes] Request body:", req.body)` en `src/routes/notes.ts` que imprime el body completo en cada petición.
 
-> **El `.env` versionado no se arregla solo con `.gitignore`.** La clave **ya está expuesta** en el historial de git. Hay que **rotarla** en el sistema externo (proveedor, dashboard) además de sacarla del repo. `git rm --cached` no borra del historial.
-
-Si tu copia local no tiene `.env`, créalo para el ejercicio con un valor demo:
-
-```bash
-echo "API_KEY=demo-secret-12345" > .env
-git add -f .env
-```
-
-(Para reproducir el problema. En un repo real, **nunca** se hace `git add -f` sobre `.env`.)
+> **El `.env` versionado no se arregla solo con `.gitignore`.** La clave **ya está expuesta** en el historial de git. Hay que **rotarla** en el sistema externo (proveedor, dashboard) además de sacarla del repo. `git rm --cached` no borra del historial — eso requiere `git filter-repo` o equivalente, fuera del scope del ejercicio.
 
 ---
 
