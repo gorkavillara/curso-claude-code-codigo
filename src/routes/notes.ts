@@ -34,5 +34,3 @@ notesRouter.post('/:id/unarchive', (req: Request, res: Response) => {
 });
 
 // routes: pendiente endpoint bulk para archivar varias notas
-
-// routes: añado validacion previa para el bulk
