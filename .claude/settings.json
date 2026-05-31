@@ -11,6 +11,8 @@
       "Bash(git log:*)",
       "Bash(ls:*)",
       "Bash(node --version)",
+      "Bash(bash scripts/dev-server.sh)",
+      "Bash(scripts/dev-server.sh)",
       "mcp__filesystem__read_file",
       "mcp__filesystem__read_multiple_files",
       "mcp__filesystem__list_directory",
@@ -27,6 +29,7 @@
       "mcp__notebox__notebox_delete_note"
     ]
   },
+  "defaultMode": "acceptEdits",
   "enabledPlugins": [
     "pr-helper"
   ],
