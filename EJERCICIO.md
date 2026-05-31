@@ -5,7 +5,7 @@
 
 ## Objetivo
 
-Preparar un hotfix sobre un bug de producción: crear rama desde `main`, aplicar el **fix mínimo**, añadir un **test de regresión**, escribir el mensaje en Conventional Commits y verificar que **un solo `git revert` deshace todo limpiamente**.
+Preparar un hotfix sobre un bug de producción: crear rama desde `tema-18/inicio` (que representa el `main` de producción para este ejercicio), aplicar el **fix mínimo**, añadir un **test de regresión**, escribir el mensaje en Conventional Commits y verificar que **un solo `git revert` deshace todo limpiamente**.
 
 ---
 
@@ -25,7 +25,7 @@ sin normalizar query ni title (case-sensitive, accent-sensitive).
 
 ## Reglas del hotfix
 
-- **La rama parte de `main`** (no de la rama actual, ni de una feature en curso).
+- **La rama parte de `tema-18/inicio`** (que representa el `main` de producción aquí). No partas de `tema-18/ejercicio-01` ni de una feature en curso.
 - **Fix mínimo:** solo lo necesario para arreglar el bug. **Nada de refactor oportunista**.
 - **Tocar exclusivamente** `src/search/index.ts` y `test/notes.search.test.ts`.
 - **Mensaje de commit** siguiendo Conventional Commits (`fix(search): ...`).
@@ -38,14 +38,16 @@ sin normalizar query ni title (case-sensitive, accent-sensitive).
 ## Parte A — Preparar la rama (2 min)
 
 ```bash
-git checkout main
-git pull origin main          # asegúrate de partir del último estado de producción
+git checkout tema-18/inicio   # equivalente al `main` de producción para este ejercicio
+git status                    # debe estar limpio antes de bifurcar
 git checkout -b hotfix/PROD-2026-018-search-normalize
 ```
 
+> En un repo real harías `git checkout main && git pull origin main`. Aquí `tema-18/inicio` es nuestro `main` de producción (contiene el bug ya plantado).
+
 Verifica:
 
-- [ ] La nueva rama parte del HEAD de `main`.
+- [ ] La nueva rama parte del HEAD de `tema-18/inicio`.
 - [ ] No has heredado cambios sin commitear de otra rama (`git status` limpio).
 
 ## Parte B — Test de regresión PRIMERO (4 min)
@@ -140,7 +142,7 @@ npm test
 
 ## Criterio de éxito
 
-- [ ] La rama parte de `main` (no de otra rama).
+- [ ] La rama parte de `tema-18/inicio` (no de otra rama).
 - [ ] Test de regresión añadido y **verificado rojo antes del fix**.
 - [ ] Fix mínimo: solo `src/search/index.ts`.
 - [ ] Commit en **Conventional Commits**.
