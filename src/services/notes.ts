@@ -61,3 +61,5 @@ export const notesService = {
     }
   },
 };
+
+// TODO(WIP): extraer helper para archive/unarchive
