@@ -1,18 +1,29 @@
-# Notebox — repo de prácticas del Tema 24 (DevOps, CI/CD, pipelines y automatización)
+# Notebox — repo de prácticas del Tema 25 (Arquitectura, diseño de software y decisiones técnicas asistidas por IA)
 
-> Rama `tema-24/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, comandos slash + script de dev-server + `notas-soporte/` del Tema 22, fixtures Docker del Tema 23). Para el Tema 24 se añaden: un `.github/workflows/ci.yml` plantado con olores reales (actions sin pin a SHA, sin cache, sin `permissions`, sin `concurrency`, jobs fusionados), un `.github/workflows/release.yml` mínimo como contexto adicional, un `scripts/release.sh` plantado sin validaciones (`set -e` solo, sin working-tree-check, push automático), y un `logs/pipeline-fail.log` con un fallo real de `npm ci` por lockfile desactualizado. La carpeta `curso/` está ignorada.
+> Rama `tema-25/inicio`. El código del Notebox vive en la raíz (`src/`, `test/`). Se mantienen los fixtures de temas anteriores (servidor MCP del Tema 20, plugin local `pr-helper` del Tema 21, comandos slash + script de dev-server del Tema 22, fixtures Docker del Tema 23, fixtures de CI/CD del Tema 24). Para el Tema 25 se añade `docs/architecture/` con los ADRs vigentes (ADR-001, ADR-002), dos decisiones pendientes plantadas (PENDING-001 sobre persistencia, PENDING-002 sobre validación), y `DEUDA-CONOCIDA.md` con el inventario de olores arquitectónicos y la próxima feature planificada. La carpeta `curso/` sigue ignorada.
 
-API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit Docker **más** kit completo para practicar CI/CD: auditoría de workflow, endurecimiento de scripts de release y triage de logs de pipeline.
+API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **más** plugin local **más** fixtures de CLI avanzada **más** kit Docker **más** kit CI/CD **más** kit completo para practicar decisiones arquitectónicas: exploración de alternativas, redacción de ADRs y auditoría de deuda.
 
-## Qué hay plantado para el Tema 24
+## Qué hay plantado para el Tema 25
 
 | Pieza | Ruta | Para qué |
 |---|---|---|
-| Workflow de CI con olores reales | `.github/workflows/ci.yml` | Auditarlo en el Ejercicio 1 (actions sin SHA pin, sin cache, sin `permissions`, sin `concurrency`, job único `ci` con `lint + typecheck + test`) |
-| Workflow de release mínimo | `.github/workflows/release.yml` | Contexto adicional. El alumno avanzado lo menciona en `CI-AUDIT.md` |
-| Script de release sin validaciones | `scripts/release.sh` | Endurecerlo en el Ejercicio 2 (`set -e` solo, sin working-tree-check, push automático) |
-| Log de pipeline con fallo real | `logs/pipeline-fail.log` | Triage en el Ejercicio 3 (`npm ci` falla por lockfile desactualizado — `Missing: vitest@1.6.0`) |
-| Smoke test de fixtures CI/CD | `test/ci-fixtures.test.ts` | Valida que el workflow, el release.sh y el log siguen con la forma esperada |
+| Índice de ADRs | `docs/architecture/README.md` | Listado de ADRs vigentes y decisiones pendientes |
+| ADR-001 (storage in-memory) | `docs/architecture/ADR-001-storage-en-memoria.md` | Modelo de formato + decisión vigente que el alumno respeta |
+| ADR-002 (Express) | `docs/architecture/ADR-002-express-framework.md` | Modelo de formato + decisión vigente que el alumno respeta |
+| PENDING-001 (persistencia) | `docs/architecture/PENDING-001-persistencia.md` | Decisión pendiente que el Ejercicio 1 explora con 3 alternativas |
+| PENDING-002 (validación) | `docs/architecture/PENDING-002-validacion-en-routes-o-services.md` | Decisión pendiente que el Ejercicio 2 cierra con ADR-003 |
+| DEUDA-CONOCIDA.md | `docs/architecture/DEUDA-CONOCIDA.md` | Inventario de olores + próxima feature (paginación), base del Ejercicio 3 |
+| Smoke test de fixtures | `test/architecture-fixtures.test.ts` | Valida que los documentos existen y mantienen la forma esperada |
+
+## Deuda arquitectónica real ya presente en `src/`
+
+| Olor | Archivo | Para qué sirve en el Ejercicio 3 |
+|---|---|---|
+| Anidamiento profundo (5 niveles) en `archive` / `unarchive` | `src/services/notes.ts` | Auditarlo y proponer plan de aplanado |
+| `services/` importa `storage/memory.ts` directamente | `src/services/notes.ts`, `src/search/index.ts` | Detectar el acoplamiento, proponer interfaz sin sobreingeniería |
+| Validación inconsistente entre rutas | `src/routes/notes.ts` | Conectar con el ADR-003 (PENDING-002) |
+| Búsqueda case-sensitive sin normalización | `src/search/index.ts` | Decidir si se asume como deuda consciente o se mitiga |
 
 ## Fixtures heredados de temas anteriores (siguen disponibles)
 
@@ -28,28 +39,32 @@ API de notas (Node 24 + Express + TypeScript) **más** servidor MCP propio **má
 | Dockerfile con olores plantados | `Dockerfile` | Tema 23 |
 | docker-compose con mismatch | `docker-compose.yml` | Tema 23 |
 | `.env.example` | `.env.example` | Tema 23 |
+| Workflow de CI con olores | `.github/workflows/ci.yml` | Tema 24 |
+| Workflow de release mínimo | `.github/workflows/release.yml` | Tema 24 |
+| Script de release sin validaciones | `scripts/release.sh` | Tema 24 |
+| Log de pipeline con fallo real | `logs/pipeline-fail.log` | Tema 24 |
 
 ## Estructura del proyecto
 
 ```
-.github/
-  workflows/
-    ci.yml                  # PLANTADO con olores reales (Tema 24)
-    release.yml             # Contexto adicional (Tema 24)
-scripts/
-  release.sh                # PLANTADO sin validaciones (Tema 24)
-  dev-server.sh             # Tema 22
-logs/
-  pipeline-fail.log         # PLANTADO con fallo real de npm ci (Tema 24)
-Dockerfile                  # Tema 23
-docker-compose.yml          # Tema 23
-.env.example                # Tema 23
+docs/
+  architecture/
+    README.md                 # Índice de ADRs (Tema 25)
+    ADR-001-storage-en-memoria.md
+    ADR-002-express-framework.md
+    PENDING-001-persistencia.md
+    PENDING-002-validacion-en-routes-o-services.md
+    DEUDA-CONOCIDA.md
+.github/workflows/            # Tema 24
+scripts/                      # Temas 22 y 24
+logs/                         # Tema 24
+Dockerfile / docker-compose.yml  # Tema 23
 src/
   server.ts
   routes/notes.ts
-  services/notes.ts
+  services/notes.ts           # Deuda plantada: anidamiento profundo
   storage/memory.ts
-  search/index.ts
+  search/index.ts             # Deuda plantada: case-sensitive
   models/note.ts
 test/
   notes.service.test.ts
@@ -57,57 +72,41 @@ test/
   mcp-notebox.test.ts
   plugin-pr-helper.test.ts
   cli-fixtures.test.ts
-  docker-fixtures.test.ts   # Tema 23
-  ci-fixtures.test.ts       # Tema 24 (smoke test de los fixtures de CI/CD)
-mcp-servers/notebox/        # Tema 20
+  docker-fixtures.test.ts
+  ci-fixtures.test.ts
+  architecture-fixtures.test.ts  # Tema 25
+mcp-servers/notebox/          # Tema 20
 .mcp.json
 .claude/
-  agents/                   # Tema 19
-  commands/                 # Tema 22
-  plugins/pr-helper/        # Tema 21
+  agents/                     # Tema 19
+  commands/                   # Tema 22
+  plugins/pr-helper/          # Tema 21
   settings.json
-notas-sesion.md             # Tema 22
-notas-soporte/              # Tema 22
+notas-sesion.md               # Tema 22
+notas-soporte/                # Tema 22
 ```
 
 ## Arranque
 
 ```bash
 npm install
-npm test        # 7 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures, ci-fixtures)
+npm test        # 8 suites verdes (notes.service, storage, mcp-notebox, plugin-pr-helper, cli-fixtures, docker-fixtures, ci-fixtures, architecture-fixtures)
 ```
 
-## Cómo usar los fixtures del Tema 24
+## Cómo usar los fixtures del Tema 25
 
-### Sin runner (entrega los `.md` igualmente)
+Los tres ejercicios son **conceptuales** — no se modifica código fuente, todos los entregables son `.md`:
 
-Los tres ejercicios se pueden completar leyendo y editando los archivos. **No se ejecuta el pipeline real**:
+- **Ejercicio 1:** lee `docs/architecture/PENDING-001-persistencia.md` y `src/storage/memory.ts`, explora 3 alternativas con Claude, evalúa trade-offs en los ejes acordados. Entrega `OPCIONES-PERSISTENCIA.md` con tabla, recomendación razonada (con lo que se pierde), alternativa descartada y "qué información me falta para decidir".
+- **Ejercicio 2:** lee `PENDING-002-validacion-en-routes-o-services.md`, decide entre las dos opciones planteadas, genera `docs/architecture/ADR-003-validacion-de-input.md` siguiendo el formato exacto de ADR-001 y ADR-002. Actualiza `docs/architecture/README.md` añadiendo la nueva entrada.
+- **Ejercicio 3:** lee `DEUDA-CONOCIDA.md` y audita el repo, conecta los olores con la próxima feature (paginación), propón plan incremental. Entrega `DEUDA-ARQUITECTONICA.md` con tabla priorizada, plan paso a paso y sección "qué dejo sin tocar y por qué".
 
-- **Ejercicio 1:** lee `.github/workflows/ci.yml`, audita con Claude, aplica fixes (jobs separados, `permissions:`, `concurrency:`, pin a SHA). Entrega `CI-AUDIT.md`.
-- **Ejercicio 2:** endurece `scripts/release.sh` con `set -euo pipefail` + 4 validaciones previas. Diseña `scripts/rollback.sh` desde cero. Entrega `RELEASE-NOTES.md`.
-- **Ejercicio 3:** lee `logs/pipeline-fail.log`, localiza el bloque del error real, formula 3 hipótesis, verifica contra `.github/workflows/ci.yml` y `package.json`/`package-lock.json`, decide el fix. Entrega `PIPELINE-TRIAGE.md`.
+## Sobre el ADR-003 y los ejercicios
 
-### Con fork propio + GitHub Actions (verificación opcional)
+`tema-25/inicio` **NO** incluye `docs/architecture/ADR-003-validacion-de-input.md` ni `OPCIONES-PERSISTENCIA.md` ni `DEUDA-ARQUITECTONICA.md`. Son los entregables esperados de los ejercicios — el alumno los crea desde cero usando Claude como sparring de arquitectura. El estado plantado en `tema-25/inicio` (PENDING-001, PENDING-002, DEUDA-CONOCIDA.md) es el contexto sobre el que se trabaja, no la solución.
 
-Si tienes un fork del repo con Actions activado:
+## Sobre la coherencia con temas previos
 
-```bash
-# Tras endurecer el workflow del Ejercicio 1:
-git push origin tema-24/ejercicio-01:tu-fork-branch
-# Abre el fork en GitHub, ve a Actions, observa el run.
-# Primer run con cache vacío tarda más; el segundo se beneficia del cache: npm.
-```
+Los ADRs plantados respetan las decisiones de implementación reales del repo Notebox (storage in-memory, Express). Esto es deliberado: el alumno trabaja sobre un repo donde las decisiones documentadas **se cumplen en el código** — y el Ejercicio 3 (auditoría de deuda) entrena el reflejo de detectar **dónde** las inconsistencias futuras se van a manifestar primero.
 
-> **Importante:** los smoke tests de `test/ci-fixtures.test.ts` validan estructura, no comportamiento. Si no tienes acceso a runner, `npm test` sigue pasando — la auditoría, el endurecimiento del script y el triage del log son lo que se evalúa.
-
-## Sobre el `rollback.sh`
-
-`tema-24/inicio` **NO** incluye `scripts/rollback.sh`. El Ejercicio 2 pide al alumno diseñarlo desde cero usando Claude como pair — patrón mínimo: confirmación interactiva, verificación de tag existente, comando de re-deploy (placeholder), smoke test post-rollback. Está documentado así en el `EJERCICIO.md` de la rama `tema-24/ejercicio-02`.
-
-## Sobre el log de pipeline plantado
-
-`logs/pipeline-fail.log` contiene un fallo real de `npm ci`: el PR añadió `vitest` a `package.json` sin regenerar el `package-lock.json`. Las primeras ~70 líneas son ruido del runner (setup, checkout, setup-node); el error vive en un bloque de 20 líneas hacia el final. El Ejercicio 3 entrena el reflejo de **filtrar antes de pegar al agente**.
-
-> El `logs/pipeline-fail.log` está exceptuado del `.gitignore` (las demás `logs/*.log` siguen ignoradas). Es un fixture, no un log generado en runtime.
-
-No arregles los olores en `tema-24/inicio`: cada `tema-24/ejercicio-0N` parte de este estado.
+No arregles la deuda en `tema-25/inicio`: cada `tema-25/ejercicio-0N` parte de este estado.
