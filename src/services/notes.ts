@@ -39,6 +39,23 @@ export const notesService = {
     }
   },
 
+  bulkArchive(ids: string[]): Note[] {
+    console.log('[bulkArchive] ids=', ids);
+    const result: Note[] = [];
+    for (const id of ids) {
+      const note = storage.findById(id);
+      if (note) {
+        if (note.archived === false) {
+          const updated = storage.update(id, { archived: true });
+          if (updated) {
+            result.push(updated);
+          }
+        }
+      }
+    }
+    return result;
+  },
+
   unarchive(id: string): Note | null {
     const note = storage.findById(id);
     if (note) {

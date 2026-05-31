@@ -21,6 +21,12 @@ notesRouter.get('/search', (req: Request, res: Response) => {
   res.json(notesService.search(q));
 });
 
+notesRouter.post('/bulk-archive', (req: Request, res: Response) => {
+  const ids = req.body.ids;
+  const result = notesService.bulkArchive(ids);
+  res.json(result);
+});
+
 notesRouter.post('/:id/archive', (req: Request, res: Response) => {
   const result = notesService.archive(req.params.id);
   if (!result) return res.status(404).json({ error: 'not found' });
