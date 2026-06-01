@@ -535,3 +535,7 @@ Ejecución de checks de CI/CD y revisión de incidencias encontradas
 Presentación final del flujo de trabajo resultante, decisiones tomadas y
 roadmap de adopción en equipo
 ```
+
+---
+
+_Índice del curso — última revisión 2026-06-01._
