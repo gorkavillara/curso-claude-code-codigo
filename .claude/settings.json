@@ -27,9 +27,7 @@
       "mcp__notebox__notebox_delete_note"
     ]
   },
-  "enabledPlugins": [
-    "pr-helper"
-  ],
+  "enabledPlugins": { "pr-helper": true },
   "hooks": {
     "PreToolUse": [
       {
