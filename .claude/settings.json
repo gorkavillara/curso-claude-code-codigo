@@ -27,7 +27,6 @@
       "mcp__notebox__notebox_delete_note"
     ]
   },
-  "enabledPlugins": { "pr-helper@imagina-internal": true },
   "hooks": {
     "PreToolUse": [
       {
@@ -40,5 +39,8 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "pr-helper@imagina-internal": true
   }
 }

@@ -2,18 +2,8 @@
   "name": "pr-helper",
   "version": "0.1.0",
   "description": "Comandos, hook de auditoría y skill de estilo de commit para PRs internos del equipo de Notebox",
-  "author": "Equipo de plataforma — Imagina",
-  "commands": [
-    "commands/summary.md",
-    "commands/checklist.md"
-  ],
-  "hooks": {
-    "PreToolUse": "hooks/pre-bash-audit.sh"
-  },
-  "skills": [
-    "skills/commit-msg-style"
-  ],
-  "agents": [
-    "agents/pr-reviewer.md"
-  ]
+  "author": {
+    "name": "Equipo de plataforma — Imagina",
+    "email": "iformacion@imaginagroup.com"
+  }
 }
