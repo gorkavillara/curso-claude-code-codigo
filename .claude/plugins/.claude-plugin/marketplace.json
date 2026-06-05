@@ -1,11 +1,15 @@
 {
   "name": "imagina-internal",
   "description": "Marketplace ficticio interno del equipo de plataforma. NO es un endpoint real: vive como archivo del repo para mostrar la forma del indice. En produccion seria un JSON servido por un bucket o un repo central.",
+  "owner": {
+    "name": "Equipo de plataforma - Imagina",
+    "email": "iformacion@imaginagroup.com"
+  },
   "plugins": [
     {
       "name": "pr-helper",
       "version": "0.1.0",
-      "source": "local:.claude/plugins/pr-helper",
+      "source": "./pr-helper",
       "description": "Comandos, hook de auditoria de Bash, skill de estilo de commit y agente de revision de PRs."
     },
     {
