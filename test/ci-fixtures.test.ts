@@ -1,61 +1,54 @@
 /**
- * Smoke test de los fixtures plantados para el Tema 24.
+ * Smoke test de los fixtures plantados para el Tema 24 (GitLab CI).
  *
  * Valida que existen y tienen la forma esperada SIN ejecutar el pipeline:
- * - .github/workflows/ci.yml con los olores plantados (actions sin SHA,
- *   sin cache, sin permissions, sin concurrency, job único).
- * - .github/workflows/release.yml mínimo.
+ * - .gitlab-ci.yml con los olores plantados (image: node:latest flotante,
+ *   job único 'ci' que mezcla lint+typecheck+test, sin cache:, secreto en
+ *   variables: global, sin interruptible:, sin workflow: rules).
  * - scripts/release.sh plantado sin validaciones (set -e solo, sin -uo pipefail).
- * - logs/pipeline-fail.log con el error real de npm ci por lockfile.
+ * - logs/pipeline-fail.log con el error real de npm ci por lockfile,
+ *   en formato de GitLab Runner.
  *
- * El test NO ejecuta workflows. Su objetivo es asegurar que el fixture
- * queda íntegro entre cohortes; la verificación contra un runner real
- * es manual y opcional, documentada en notas.md del curso.
+ * El test NO ejecuta el pipeline. Su objetivo es asegurar que el fixture
+ * queda íntegro entre cohortes; la verificación contra un runner real de
+ * GitLab es manual y opcional, documentada en notas.md del curso.
  */
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-describe('fixtures del Tema 24', () => {
-  it('.github/workflows/ci.yml está plantado con los olores esperados', () => {
-    const path = resolve('.github/workflows/ci.yml');
-    assert.ok(existsSync(path), '.github/workflows/ci.yml no existe');
+describe('fixtures del Tema 24 (GitLab CI)', () => {
+  it('.gitlab-ci.yml está plantado con los olores esperados', () => {
+    const path = resolve('.gitlab-ci.yml');
+    assert.ok(existsSync(path), '.gitlab-ci.yml no existe');
     const content = readFileSync(path, 'utf8');
 
-    // Actions sin pin a SHA (usan @vN).
-    assert.match(content, /uses:\s*actions\/checkout@v3/, 'checkout debe usar @v3 sin SHA pin');
-    assert.match(content, /uses:\s*actions\/setup-node@v3/, 'setup-node debe usar @v3 sin SHA pin');
+    // image: node:latest (tag flotante, sin pin a versión ni digest @sha256).
+    assert.match(content, /image:\s*node:latest/, 'debe usar image: node:latest (tag flotante)');
+    assert.doesNotMatch(content, /node:[\d.]+@sha256:/, 'no debe pinear la imagen a digest (olor plantado)');
 
-    // Sin bloque permissions: declarado.
-    assert.doesNotMatch(content, /^permissions:/m, 'no debe declarar permissions: (olor plantado)');
+    // Job único 'ci' que mezcla lint + typecheck + test (sin jobs/stages separados).
+    assert.match(content, /^ci:/m, 'debe haber un job único llamado ci');
+    assert.doesNotMatch(content, /^lint:/m, 'no debe haber job lint separado (olor plantado)');
+    assert.doesNotMatch(content, /^typecheck:/m, 'no debe haber job typecheck separado (olor plantado)');
+    assert.doesNotMatch(content, /\bneeds:/, 'no debe usar needs: entre jobs (olor plantado)');
 
-    // Sin bloque concurrency: con cancel-in-progress.
-    assert.doesNotMatch(content, /^concurrency:/m, 'no debe declarar concurrency: (olor plantado)');
+    // Secreto declarado en variables: global (visible para todos los jobs).
+    assert.match(content, /^variables:/m, 'debe declarar un bloque variables: global (olor plantado)');
+    assert.match(content, /NPM_TOKEN/, 'debe filtrar NPM_TOKEN como variable global (olor plantado)');
 
-    // Job único 'ci' que mezcla lint + typecheck + test (sin jobs separados con needs:).
-    assert.match(content, /^\s+ci:/m, 'debe haber un job único llamado ci');
-    assert.doesNotMatch(content, /^\s+lint:/m, 'no debe haber job lint separado (olor plantado)');
-    assert.doesNotMatch(content, /^\s+typecheck:/m, 'no debe haber job typecheck separado (olor plantado)');
-    assert.doesNotMatch(content, /^\s+test:\s*$/m, 'no debe haber job test separado (olor plantado)');
-    assert.doesNotMatch(content, /needs:/, 'no debe usar needs: entre jobs (olor plantado)');
+    // Sin cache: para ~/.npm.
+    assert.doesNotMatch(content, /^\s*cache:/m, 'no debe declarar cache: (olor plantado)');
 
-    // runs-on flotante.
-    assert.match(content, /runs-on:\s*ubuntu-latest/, 'debe usar ubuntu-latest (versión flotante)');
+    // Sin interruptible: true (no se cancelan pipelines viejos).
+    assert.doesNotMatch(content, /interruptible:/, 'no debe declarar interruptible: (olor plantado)');
 
-    // setup-node sin cache:.
-    assert.doesNotMatch(content, /cache:\s*['"]?npm['"]?/, 'setup-node NO debe declarar cache (olor plantado)');
+    // Sin workflow: rules (corre en cualquier rama / evento).
+    assert.doesNotMatch(content, /^workflow:/m, 'no debe declarar workflow: rules (olor plantado)');
 
-    // on: push: branches: '*' permisivo.
-    assert.match(content, /branches:\s*\n\s+-\s+['"]?\*['"]?/m, 'on.push.branches debe permitir cualquier rama');
-  });
-
-  it('.github/workflows/release.yml está plantado como contexto adicional', () => {
-    const path = resolve('.github/workflows/release.yml');
-    assert.ok(existsSync(path), '.github/workflows/release.yml no existe');
-    const content = readFileSync(path, 'utf8');
-    assert.match(content, /^name:\s*Release/m, 'debe llamarse Release');
-    assert.match(content, /tags:\s*\n\s+-\s+['"]?v\*/m, 'debe activarse con tags vX.Y.Z');
+    // Coherencia con el log: el job ejecuta npm ci (el comando que falla).
+    assert.match(content, /npm ci/, 'el job debe ejecutar npm ci (que es el comando que falla en el log)');
   });
 
   it('scripts/release.sh está plantado sin validaciones', () => {
@@ -76,25 +69,23 @@ describe('fixtures del Tema 24', () => {
     assert.match(content, /git push origin main --tags/, 'debe hacer push automático (olor plantado)');
   });
 
-  it('logs/pipeline-fail.log está plantado con el error de npm ci por lockfile', () => {
+  it('logs/pipeline-fail.log está plantado con el error de npm ci por lockfile (formato GitLab Runner)', () => {
     const path = resolve('logs/pipeline-fail.log');
     assert.ok(existsSync(path), 'logs/pipeline-fail.log no existe');
     const content = readFileSync(path, 'utf8');
 
-    // El log es largo (ruido de setup) — al menos 100 líneas.
+    // El log tiene ruido de setup del runner + señal — al menos 60 líneas.
     const lines = content.split('\n');
-    assert.ok(lines.length >= 100, `el log debe tener >= 100 líneas de ruido + señal (tiene ${lines.length})`);
+    assert.ok(lines.length >= 60, `el log debe tener >= 60 líneas de ruido + señal (tiene ${lines.length})`);
+
+    // Es un log de GitLab Runner, no de GitHub Actions.
+    assert.match(content, /Running with gitlab-runner/, 'debe ser un log de GitLab Runner');
+    assert.doesNotMatch(content, /##\[group\]/, 'no debe contener marcadores ##[group] de GitHub Actions');
 
     // Contiene el error real de EUSAGE por lockfile desactualizado.
-    assert.match(content, /npm ERR! code EUSAGE/, 'debe contener el error EUSAGE de npm ci');
+    assert.match(content, /npm error code EUSAGE/, 'debe contener el error EUSAGE de npm ci');
     assert.match(content, /Missing: vitest@/, 'debe mencionar Missing: vitest@ (causa raíz)');
     assert.match(content, /package\.json and package-lock\.json or npm-shrinkwrap\.json are in sync/, 'debe explicar el desync de lockfile');
-    assert.match(content, /##\[error\]Process completed with exit code 1\./, 'debe terminar con exit code 1');
-  });
-
-  it('.github/workflows/ci.yml no usa npm install (usa npm ci, coherente con el log)', () => {
-    const content = readFileSync(resolve('.github/workflows/ci.yml'), 'utf8');
-    // Verificación de coherencia entre el workflow y el log plantado.
-    assert.match(content, /npm ci/, 'el workflow debe ejecutar npm ci (que es el comando que falla en el log)');
+    assert.match(content, /ERROR: Job failed: exit code 1/, 'debe terminar con el fallo de job de GitLab');
   });
 });
