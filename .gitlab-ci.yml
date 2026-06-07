@@ -1,0 +1,45 @@
+# Pipeline inicial del Notebox (Tema 24 - plantado con olores reales).
+#
+# Este pipeline NO está optimizado a propósito. El Ejercicio 1 consiste en
+# auditarlo, priorizar olores y aplicar 3 fixes razonados. No edites este
+# archivo hasta haber pedido a Claude el diagnóstico inicial.
+#
+# Olores plantados (no exhaustivo):
+# - image: node:latest (tag flotante, sin pin a versión ni a digest @sha256).
+# - Un único job 'ci' que mezcla lint + typecheck + test + build (sin stages
+#   separados ni dependencias entre etapas; un fallo de lint enmascara los de test).
+# - Sin bloque de cache para ~/.npm (cada pipeline baja las deps desde cero).
+# - Secreto declarado en el bloque variables global (visible para TODOS los jobs).
+# - Sin la opción que cancela el pipeline anterior cuando llega un push nuevo.
+# - Sin reglas de workflow (corre en cualquier rama y en cualquier evento).
+
+default:
+  image: node:latest
+
+variables:
+  NPM_TOKEN: "demo-npm-token-CHANGEME"   # secreto global: cualquier job (lint incluido) lo ve
+
+stages:
+  - ci
+
+ci:
+  stage: ci
+  script:
+    - npm ci
+    - npm run lint --if-present
+    - npm run typecheck
+    - npm test
+    - npm run build --if-present
+
+# Job de release (contexto adicional - NO es objetivo del Ejercicio 1).
+# Se dispara al pushear un tag vX.Y.Z. Se incluye para que el alumno
+# avanzado lo mencione en CI-AUDIT.md: lo auditaría por los mismos criterios
+# (image flotante, sin cache, secreto global heredado).
+release:
+  stage: ci
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  script:
+    - npm install
+    - npm test
+    - echo "Aquí se publicaría la release de $CI_COMMIT_TAG"
