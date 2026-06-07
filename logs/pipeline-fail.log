@@ -1,154 +1,75 @@
-2024-01-15T10:23:30.0000001Z Current runner version: '2.311.0'
-2024-01-15T10:23:30.0000002Z ##[group]Operating System
-2024-01-15T10:23:30.0000003Z Ubuntu
-2024-01-15T10:23:30.0000004Z 22.04.3
-2024-01-15T10:23:30.0000005Z LTS
-2024-01-15T10:23:30.0000006Z ##[endgroup]
-2024-01-15T10:23:30.0000007Z ##[group]Runner Image
-2024-01-15T10:23:30.0000008Z Image: ubuntu-22.04
-2024-01-15T10:23:30.0000009Z Version: 20240108.1.0
-2024-01-15T10:23:30.0000010Z Included Software: https://github.com/actions/runner-images/blob/ubuntu22/20240108.1/images/ubuntu/Ubuntu2204-Readme.md
-2024-01-15T10:23:30.0000011Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu22%2F20240108.1
-2024-01-15T10:23:30.0000012Z ##[endgroup]
-2024-01-15T10:23:30.0000013Z ##[group]Runner Image Provisioner
-2024-01-15T10:23:30.0000014Z 2.0.290.1
-2024-01-15T10:23:30.0000015Z ##[endgroup]
-2024-01-15T10:23:30.0000016Z ##[group]GITHUB_TOKEN Permissions
-2024-01-15T10:23:30.0000017Z Actions: write
-2024-01-15T10:23:30.0000018Z Checks: write
-2024-01-15T10:23:30.0000019Z Contents: write
-2024-01-15T10:23:30.0000020Z Deployments: write
-2024-01-15T10:23:30.0000021Z Discussions: write
-2024-01-15T10:23:30.0000022Z Issues: write
-2024-01-15T10:23:30.0000023Z Metadata: read
-2024-01-15T10:23:30.0000024Z Packages: write
-2024-01-15T10:23:30.0000025Z Pages: write
-2024-01-15T10:23:30.0000026Z PullRequests: write
-2024-01-15T10:23:30.0000027Z RepositoryProjects: write
-2024-01-15T10:23:30.0000028Z SecurityEvents: write
-2024-01-15T10:23:30.0000029Z Statuses: write
-2024-01-15T10:23:30.0000030Z ##[endgroup]
-2024-01-15T10:23:30.1000000Z Secret source: Actions
-2024-01-15T10:23:30.1000001Z Prepare workflow directory
-2024-01-15T10:23:30.2000000Z Prepare all required actions
-2024-01-15T10:23:30.3000000Z Getting action download info
-2024-01-15T10:23:30.5000000Z Download action repository 'actions/checkout@v3' (SHA:f43a0e5ff2bd294095638e18286ca9a3d1956744)
-2024-01-15T10:23:30.9000000Z Download action repository 'actions/setup-node@v3' (SHA:1a4442cacd436585916779262731d5b162bc6ec7)
-2024-01-15T10:23:31.0000000Z Complete job name: ci
-2024-01-15T10:23:31.1000000Z ##[group]Run actions/checkout@v3
-2024-01-15T10:23:31.1000001Z with:
-2024-01-15T10:23:31.1000002Z   repository: gorkavillara/notebox
-2024-01-15T10:23:31.1000003Z   token: ***
-2024-01-15T10:23:31.1000004Z   ssh-strict: true
-2024-01-15T10:23:31.1000005Z   persist-credentials: true
-2024-01-15T10:23:31.1000006Z   clean: true
-2024-01-15T10:23:31.1000007Z   sparse-checkout-cone-mode: true
-2024-01-15T10:23:31.1000008Z   fetch-depth: 1
-2024-01-15T10:23:31.1000009Z   fetch-tags: false
-2024-01-15T10:23:31.1000010Z   show-progress: true
-2024-01-15T10:23:31.1000011Z   lfs: false
-2024-01-15T10:23:31.1000012Z   submodules: false
-2024-01-15T10:23:31.1000013Z   set-safe-directory: true
-2024-01-15T10:23:31.1000014Z ##[endgroup]
-2024-01-15T10:23:31.2000000Z Syncing repository: gorkavillara/notebox
-2024-01-15T10:23:31.2500000Z ##[group]Getting Git version info
-2024-01-15T10:23:31.2500001Z Working directory is '/home/runner/work/notebox/notebox'
-2024-01-15T10:23:31.3000000Z [command]/usr/bin/git version
-2024-01-15T10:23:31.3500000Z git version 2.43.0
-2024-01-15T10:23:31.3500001Z ##[endgroup]
-2024-01-15T10:23:31.4000000Z Temporarily overriding HOME='/home/runner/work/_temp/abc' before making global git config changes
-2024-01-15T10:23:31.4500000Z Adding repository directory to the temporary git global config as a safe directory
-2024-01-15T10:23:31.5000000Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/notebox/notebox
-2024-01-15T10:23:31.5500000Z Deleting the contents of '/home/runner/work/notebox/notebox'
-2024-01-15T10:23:31.6000000Z ##[group]Initializing the repository
-2024-01-15T10:23:31.6000001Z [command]/usr/bin/git init /home/runner/work/notebox/notebox
-2024-01-15T10:23:31.7000000Z hint: Using 'master' as the name for the initial branch.
-2024-01-15T10:23:31.7500000Z Initialized empty Git repository in /home/runner/work/notebox/notebox/.git/
-2024-01-15T10:23:31.8000000Z [command]/usr/bin/git remote add origin https://github.com/gorkavillara/notebox
-2024-01-15T10:23:31.8500000Z ##[endgroup]
-2024-01-15T10:23:31.9000000Z ##[group]Disabling automatic garbage collection
-2024-01-15T10:23:31.9500000Z [command]/usr/bin/git config --local gc.auto 0
-2024-01-15T10:23:31.9999999Z ##[endgroup]
-2024-01-15T10:23:32.0500000Z ##[group]Setting up auth
-2024-01-15T10:23:32.1000000Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2024-01-15T10:23:32.1500000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2024-01-15T10:23:32.2000000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2024-01-15T10:23:32.2500000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2024-01-15T10:23:32.3000000Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
-2024-01-15T10:23:32.3500000Z ##[endgroup]
-2024-01-15T10:23:32.4000000Z ##[group]Fetching the repository
-2024-01-15T10:23:32.4500000Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +abc123def456ghi789jkl012mno345pqr678stu9:refs/remotes/pull/127/merge
-2024-01-15T10:23:33.0000000Z From https://github.com/gorkavillara/notebox
-2024-01-15T10:23:33.0500000Z  * [new ref]         abc123def456ghi789jkl012mno345pqr678stu9 -> pull/127/merge
-2024-01-15T10:23:33.1000000Z ##[endgroup]
-2024-01-15T10:23:33.1500000Z ##[group]Determining the checkout info
-2024-01-15T10:23:33.2000000Z ##[endgroup]
-2024-01-15T10:23:33.2500000Z ##[group]Checking out the ref
-2024-01-15T10:23:33.3000000Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/127/merge
-2024-01-15T10:23:33.4000000Z Note: switching to 'refs/remotes/pull/127/merge'.
-2024-01-15T10:23:33.4500000Z You are in 'detached HEAD' state.
-2024-01-15T10:23:33.5000000Z HEAD is now at abc123d Merge pull/127/head into pull/127/base
-2024-01-15T10:23:33.5500000Z ##[endgroup]
-2024-01-15T10:23:33.6000000Z [command]/usr/bin/git log -1 --format='%H'
-2024-01-15T10:23:33.6500000Z 'abc123def456ghi789jkl012mno345pqr678stu9'
-2024-01-15T10:23:33.7000000Z ##[group]Run actions/setup-node@v3
-2024-01-15T10:23:33.7000001Z with:
-2024-01-15T10:23:33.7000002Z   node-version: 24
-2024-01-15T10:23:33.7000003Z   always-auth: false
-2024-01-15T10:23:33.7000004Z   check-latest: false
-2024-01-15T10:23:33.7000005Z   token: ***
-2024-01-15T10:23:33.7000006Z ##[endgroup]
-2024-01-15T10:23:33.8000000Z Found in cache @ /opt/hostedtoolcache/node/24.0.0/x64
-2024-01-15T10:23:34.0000000Z Environment details
-2024-01-15T10:23:34.0500000Z node: v24.0.0
-2024-01-15T10:23:34.1000000Z npm: 10.5.0
-2024-01-15T10:23:34.1500000Z yarn: 1.22.21
-2024-01-15T10:23:45.1234567Z ##[group]Run npm ci
-2024-01-15T10:23:45.1234568Z npm ci
-2024-01-15T10:23:45.1234569Z shell: /usr/bin/bash -e {0}
-2024-01-15T10:23:45.1234570Z ##[endgroup]
-2024-01-15T10:23:45.2345678Z npm ERR! code EUSAGE
-2024-01-15T10:23:45.2456789Z npm ERR!
-2024-01-15T10:23:45.2567890Z npm ERR! `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
-2024-01-15T10:23:45.2678901Z npm ERR!
-2024-01-15T10:23:45.2789012Z npm ERR! Missing: vitest@1.6.0 from lock file
-2024-01-15T10:23:45.2890123Z npm ERR! Missing: @vitest/expect@1.6.0 from lock file
-2024-01-15T10:23:45.2901234Z npm ERR! Missing: @vitest/runner@1.6.0 from lock file
-2024-01-15T10:23:45.2912345Z npm ERR! Missing: @vitest/snapshot@1.6.0 from lock file
-2024-01-15T10:23:45.2923456Z npm ERR! Missing: @vitest/utils@1.6.0 from lock file
-2024-01-15T10:23:45.2934567Z npm ERR!
-2024-01-15T10:23:45.3001234Z npm ERR! Clean install a project
-2024-01-15T10:23:45.3012345Z npm ERR!
-2024-01-15T10:23:45.3023456Z npm ERR! Usage:
-2024-01-15T10:23:45.3034567Z npm ERR! npm ci
-2024-01-15T10:23:45.3045678Z npm ERR!
-2024-01-15T10:23:45.3056789Z npm ERR! Options:
-2024-01-15T10:23:45.3067890Z npm ERR! [--install-strategy=hoisted|nested|shallow|linked] [--legacy-bundling]
-2024-01-15T10:23:45.3078901Z npm ERR! [--global-style] [--omit=<dev|optional|peer> [--omit=<dev|optional|peer> ...]]
-2024-01-15T10:23:45.3089012Z npm ERR! [--include=<prod|dev|optional|peer> [--include=<prod|dev|optional|peer> ...]]
-2024-01-15T10:23:45.3100123Z npm ERR! [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
-2024-01-15T10:23:45.3111234Z npm ERR! [--no-bin-links] [--no-fund] [--dry-run]
-2024-01-15T10:23:45.3112345Z npm ERR! [-w|--workspace <workspace-spec> [-w|--workspace <workspace-spec> ...]]
-2024-01-15T10:23:45.3123456Z npm ERR! [-ws|--workspaces] [--include-workspace-root] [--install-links]
-2024-01-15T10:23:45.3134567Z npm ERR!
-2024-01-15T10:23:45.3145678Z npm ERR! aliases: clean-install, ic, install-clean, isntall-clean
-2024-01-15T10:23:45.3156789Z npm ERR!
-2024-01-15T10:23:45.3167890Z npm ERR! Run "npm help ci" for more info
-2024-01-15T10:23:45.3178901Z
-2024-01-15T10:23:45.3334567Z npm ERR! A complete log of this run can be found in: /home/runner/.npm/_logs/2024-01-15T10_23_45_000Z-debug-0.log
-2024-01-15T10:23:46.0000000Z ##[error]Process completed with exit code 1.
-2024-01-15T10:23:46.5000000Z Post job cleanup.
-2024-01-15T10:23:46.6000000Z [command]/usr/bin/git version
-2024-01-15T10:23:46.6500000Z git version 2.43.0
-2024-01-15T10:23:46.7000000Z Temporarily overriding HOME='/home/runner/work/_temp/abc' before making global git config changes
-2024-01-15T10:23:46.7500000Z Adding repository directory to the temporary git global config as a safe directory
-2024-01-15T10:23:46.8000000Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/notebox/notebox
-2024-01-15T10:23:46.8500000Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2024-01-15T10:23:46.9000000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2024-01-15T10:23:46.9500000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2024-01-15T10:23:47.0000000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2024-01-15T10:23:47.0500000Z http.https://github.com/.extraheader
-2024-01-15T10:23:47.1000000Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
-2024-01-15T10:23:47.1500000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'url\.https\:\/\/github\.com\/\.insteadOf' && git config --local --unset-all 'url.https://github.com/.insteadOf' || :"
-2024-01-15T10:23:47.2000000Z Cleaning up orphan processes
-2024-01-15T10:23:47.2500000Z ##[error]Process completed with exit code 1.
+Running with gitlab-runner 16.9.1 (b3401b14)
+  on green-docker-runner-3 abcd1234, system ID: s_9f2c1e7a0b44
+  feature flags: FF_USE_FASTZIP:true
+Preparing the "docker" executor
+Using Docker executor with image node:latest ...
+Authenticating with credentials from job payload (GitLab Registry)
+Pulling docker image node:latest ...
+Using docker image sha256:6c3f7a1e9d2b4c5f8a0e1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60 for node:latest with digest node@sha256:9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b ...
+Preparing environment
+Running on runner-abcd1234-project-42-concurrent-0 via gitlab-runner-7d9f8c...
+Getting source from Git repository
+section_start:1705315410:get_sources
+Fetching changes with git depth set to 20...
+Initialized empty Git repository in /builds/notebox/notebox/.git/
+Created fresh repository.
+Checking out a1b2c3d4 as detached HEAD (ref is refs/merge-requests/127/merge)...
+remote: Enumerating objects: 412, done.
+remote: Counting objects: 100% (412/412), done.
+remote: Compressing objects: 100% (260/260), done.
+remote: Total 412 (delta 198), reused 360 (delta 146), pack-reused 0
+Receiving objects: 100% (412/412), 1.21 MiB | 8.40 MiB/s, done.
+Resolving deltas: 100% (198/198), done.
+From https://gitlab.com/notebox/notebox
+ * [new ref]         refs/merge-requests/127/merge -> refs/merge-requests/127/merge
+HEAD is now at a1b2c3d Merge branch 'feat/upgrade-vitest' into 'main'
+Skipping Git submodules setup
+section_end:1705315414:get_sources
+section_start:1705315414:restore_cache
+Restoring cache
+Checking cache for default-protected...
+No URL provided, cache will not be downloaded from shared cache server. Instead a local version of cache will be extracted.
+WARNING: node_modules/: no matching files. Ensure that the artifact path is relative to the working directory
+Successfully extracted cache
+section_end:1705315415:restore_cache
+section_start:1705315415:step_script
+Executing "step_script" stage of the job script
+Using docker image sha256:6c3f7a1e9d2b4c5f8a0e1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60 for node:latest with digest node@sha256:9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b ...
+$ node --version
+v22.11.0
+$ npm --version
+10.9.0
+$ npm ci
+npm error code EUSAGE
+npm error
+npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+npm error
+npm error Missing: vitest@1.6.0 from lock file
+npm error Missing: @vitest/expect@1.6.0 from lock file
+npm error Missing: @vitest/runner@1.6.0 from lock file
+npm error Missing: @vitest/snapshot@1.6.0 from lock file
+npm error Missing: @vitest/utils@1.6.0 from lock file
+npm error
+npm error Clean install a project
+npm error
+npm error Usage:
+npm error npm ci
+npm error
+npm error Options:
+npm error [--install-strategy=hoisted|nested|shallow|linked] [--legacy-bundling]
+npm error [--global-style] [--omit=<dev|optional|peer> [--omit=<dev|optional|peer> ...]]
+npm error [--include=<prod|dev|optional|peer> [--include=<prod|dev|optional|peer> ...]]
+npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+npm error [--no-bin-links] [--no-fund] [--dry-run]
+npm error [-w|--workspace <workspace-spec> [-w|--workspace <workspace-spec> ...]]
+npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+npm error
+npm error aliases: clean-install, ic, install-clean, isntall-clean
+npm error
+npm error Run "npm help ci" for more info
+npm error A complete log of this run can be found in: /root/.npm/_logs/2024-01-15T10_23_45_123Z-debug-0.log
+section_end:1705315417:step_script
+section_start:1705315417:cleanup_file_variables
+Cleaning up project directory and file based variables
+section_end:1705315417:cleanup_file_variables
+ERROR: Job failed: exit code 1
